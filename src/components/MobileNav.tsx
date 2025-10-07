@@ -5,17 +5,20 @@ import {
   Bed, 
   Droplet, 
   Wind, 
-  Ambulance
+  Ambulance,
+  Users,
+  Stethoscope,
+  Settings
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { name: "Requests", href: "/requests", icon: AlertCircle },
+  { name: "Requests", href: "/requests", icon: AlertCircle, badge: 3 },
+  { name: "Patients", href: "/patients", icon: Users },
   { name: "Beds", href: "/beds", icon: Bed },
-  { name: "Blood", href: "/blood", icon: Droplet },
-  { name: "Oxygen", href: "/oxygen", icon: Wind },
-  { name: "Fleet", href: "/ambulances", icon: Ambulance },
+  { name: "Emergency", href: "/emergency", icon: Stethoscope },
+  { name: "More", href: "/settings", icon: Settings },
 ];
 
 export function MobileNav() {
@@ -41,9 +44,9 @@ export function MobileNav() {
                 <>
                   <Icon className="w-5 h-5" />
                   <span className="truncate w-full text-center">{item.name}</span>
-                  {item.name === "Requests" && (
+                  {item.badge && (
                     <span className="absolute top-1 right-1 w-4 h-4 rounded-full bg-emergency text-white text-[10px] flex items-center justify-center font-bold">
-                      3
+                      {item.badge}
                     </span>
                   )}
                 </>
