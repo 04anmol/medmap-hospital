@@ -1,4 +1,4 @@
-import { Activity, Bed, Droplet, Ambulance, Wind, TrendingUp, Clock, Users } from "lucide-react";
+import { Activity, Bed, Droplet, Ambulance, Wind, TrendingUp, Clock, Users, Edit3, Plus, Send, Zap } from "lucide-react";
 import { Card } from "@/components/ui/card";
 
 const kpis = [
@@ -9,10 +9,10 @@ const kpis = [
 ];
 
 const quickActions = [
-  { icon: Bed, label: "Update ICU", color: "bg-info" },
-  { icon: Droplet, label: "Update Blood", color: "bg-emergency" },
-  { icon: Wind, label: "Update Oxygen", color: "bg-success" },
-  { icon: Ambulance, label: "Dispatch Ambulance", color: "bg-warning" },
+  { icon: Edit3, label: "Update ICU", color: "bg-info" },
+  { icon: Plus, label: "Update Blood", color: "bg-emergency" },
+  { icon: Zap, label: "Update Oxygen", color: "bg-success" },
+  { icon: Send, label: "Dispatch Ambulance", color: "bg-warning" },
 ];
 
 const recentActivity = [

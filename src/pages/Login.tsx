@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Link2, Mail, Lock, Hospital } from "lucide-react";
+import { Link2, Mail, Lock } from "lucide-react";
 import { toast } from "sonner";
 
 export default function Login() {
@@ -33,8 +33,8 @@ export default function Login() {
       <div className="w-full max-w-md">
         {/* Logo & Header */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl gradient-primary mb-4">
-            <Hospital className="w-8 h-8 text-white" />
+          <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-primary/10 mb-4 hover:bg-primary/20 transition-colors duration-300 hover:scale-105 transform">
+            <img src="/logo.png" alt="MedMap Logo" className="w-16 h-16 object-contain hover:scale-110 transition-transform duration-300" />
           </div>
           <h1 className="text-3xl font-bold mb-2">MedMap Hospital</h1>
           <p className="text-muted-foreground">Provider dashboard access</p>

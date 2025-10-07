@@ -6,7 +6,6 @@ import {
   Droplet, 
   Wind, 
   Ambulance,
-  Hospital,
   LogOut
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -27,8 +26,8 @@ export function Sidebar() {
       {/* Logo */}
       <div className="p-6 border-b border-border">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl gradient-primary flex items-center justify-center">
-            <Hospital className="w-6 h-6 text-white" />
+          <div className="w-10 h-10 rounded-xl overflow-hidden">
+            <img src="/logo.png" alt="MedMap Logo" className="w-full h-full object-contain" />
           </div>
           <div>
             <h2 className="font-bold text-lg">MedMap</h2>
