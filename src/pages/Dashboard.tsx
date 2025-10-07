@@ -2,17 +2,61 @@ import { Activity, Bed, Droplet, Ambulance, Wind, TrendingUp, Clock, Users, Edit
 import { Card } from "@/components/ui/card";
 
 const kpis = [
-  { icon: Bed, label: "ICU Beds", value: "12", total: "24", status: "available", trend: "+2" },
-  { icon: Wind, label: "Ventilators", value: "8", total: "15", status: "available", trend: "0" },
-  { icon: Droplet, label: "Blood Units", value: "156", total: "200", status: "low", trend: "-12" },
-  { icon: Ambulance, label: "Ambulances", value: "6", total: "10", status: "available", trend: "+1" },
+  { 
+    icon: Bed, 
+    label: "ICU Beds", 
+    value: "12", 
+    total: "24", 
+    status: "available", 
+    trend: "+2",
+    utilization: "50%",
+    lastUpdate: "2 min ago",
+    nextAvailable: "3 beds",
+    department: "Critical Care"
+  },
+  { 
+    icon: Wind, 
+    label: "Ventilators", 
+    value: "8", 
+    total: "15", 
+    status: "available", 
+    trend: "0",
+    utilization: "53%",
+    lastUpdate: "5 min ago",
+    nextAvailable: "2 units",
+    department: "Respiratory"
+  },
+  { 
+    icon: Droplet, 
+    label: "Blood Units", 
+    value: "156", 
+    total: "200", 
+    status: "low", 
+    trend: "-12",
+    utilization: "78%",
+    lastUpdate: "1 min ago",
+    nextAvailable: "44 units",
+    department: "Blood Bank"
+  },
+  { 
+    icon: Ambulance, 
+    label: "Ambulances", 
+    value: "6", 
+    total: "10", 
+    status: "available", 
+    trend: "+1",
+    utilization: "60%",
+    lastUpdate: "3 min ago",
+    nextAvailable: "4 vehicles",
+    department: "Emergency Services"
+  },
 ];
 
 const quickActions = [
-  { icon: Edit3, label: "Update ICU", color: "bg-info" },
-  { icon: Plus, label: "Update Blood", color: "bg-emergency" },
-  { icon: Zap, label: "Update Oxygen", color: "bg-success" },
-  { icon: Send, label: "Dispatch Ambulance", color: "bg-warning" },
+  { icon: Bed, label: "Update ICU", color: "bg-info" },
+  { icon: Droplet, label: "Update Blood", color: "bg-emergency" },
+  { icon: Wind, label: "Update Oxygen", color: "bg-success" },
+  { icon: Ambulance, label: "Dispatch Ambulance", color: "bg-warning" },
 ];
 
 const recentActivity = [
@@ -40,11 +84,9 @@ export default function Dashboard() {
             <Card key={kpi.label} className="p-4 shadow-card rounded-2xl border">
               <div className="flex items-start justify-between mb-3">
                 <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
-                  kpi.status === 'available' ? 'bg-success/10' : 'bg-warning/10'
+                  kpi.status === 'available' ? 'bg-success' : 'bg-warning'
                 }`}>
-                  <Icon className={`w-5 h-5 ${
-                    kpi.status === 'available' ? 'text-success' : 'text-warning'
-                  }`} />
+                  <Icon className="w-5 h-5 text-white" />
                 </div>
                 {kpi.trend && (
                   <span className={`text-xs font-medium px-2 py-1 rounded-full ${
@@ -55,11 +97,36 @@ export default function Dashboard() {
                   </span>
                 )}
               </div>
-              <div className="mb-1">
-                <span className="text-2xl font-bold">{kpi.value}</span>
-                <span className="text-muted-foreground">/{kpi.total}</span>
+              
+              <div className="mb-3">
+                <div className="flex items-baseline gap-1 mb-1">
+                  <span className="text-2xl font-bold">{kpi.value}</span>
+                  <span className="text-muted-foreground">/{kpi.total}</span>
+                </div>
+                <p className="text-sm text-muted-foreground">{kpi.label}</p>
+                <p className="text-xs text-muted-foreground">{kpi.department}</p>
               </div>
-              <p className="text-sm text-muted-foreground">{kpi.label}</p>
+
+              <div className="space-y-2">
+                <div className="flex justify-between items-center">
+                  <span className="text-xs text-muted-foreground">Utilization</span>
+                  <span className="text-xs font-medium">{kpi.utilization}</span>
+                </div>
+                
+                <div className="w-full bg-muted rounded-full h-1.5">
+                  <div 
+                    className={`h-1.5 rounded-full ${
+                      kpi.status === 'available' ? 'bg-success' : 'bg-warning'
+                    }`}
+                    style={{ width: kpi.utilization }}
+                  ></div>
+                </div>
+
+                <div className="flex justify-between items-center text-xs text-muted-foreground">
+                  <span>Next: {kpi.nextAvailable}</span>
+                  <span>{kpi.lastUpdate}</span>
+                </div>
+              </div>
             </Card>
           );
         })}
@@ -76,8 +143,8 @@ export default function Dashboard() {
                 key={action.label}
                 className="p-4 rounded-2xl bg-card border border-border shadow-soft hover:shadow-card transition-all hover:scale-[1.02] active:scale-[0.98]"
               >
-                <div className={`w-12 h-12 rounded-xl ${action.color} bg-opacity-10 flex items-center justify-center mb-3 mx-auto`}>
-                  <Icon className="w-6 h-6" style={{ color: `hsl(var(--${action.color.replace('bg-', '')}))` }} />
+                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-3 mx-auto">
+                  <Icon className="w-6 h-6 text-primary" />
                 </div>
                 <p className="text-sm font-medium text-center">{action.label}</p>
               </button>
@@ -94,19 +161,30 @@ export default function Dashboard() {
             <h2 className="text-lg font-semibold">Recent Activity</h2>
           </div>
           <div className="space-y-3">
-            {recentActivity.map((activity, index) => (
-              <div key={index} className="flex items-start gap-3 p-3 rounded-xl bg-muted/30 hover:bg-muted/50 transition-colors">
-                <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${
-                  activity.type === 'success' ? 'bg-success' :
-                  activity.type === 'emergency' ? 'bg-emergency' :
-                  activity.type === 'warning' ? 'bg-warning' : 'bg-info'
-                }`} />
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium">{activity.action}</p>
-                  <p className="text-xs text-muted-foreground mt-1">{activity.time}</p>
+            {recentActivity.map((activity, index) => {
+              const gradientColors = [
+                "bg-gradient-to-r from-blue-100 to-blue-200 border-blue-300",
+                "bg-gradient-to-r from-green-100 to-green-200 border-green-300",
+                "bg-gradient-to-r from-purple-100 to-purple-200 border-purple-300",
+                "bg-gradient-to-r from-pink-100 to-pink-200 border-pink-300",
+                "bg-gradient-to-r from-cyan-100 to-cyan-200 border-cyan-300"
+              ];
+              const colorClass = gradientColors[index % gradientColors.length];
+              
+              return (
+                <div key={index} className={`flex items-start gap-3 p-3 rounded-xl border ${colorClass} hover:shadow-md transition-all`}>
+                  <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${
+                    activity.type === 'success' ? 'bg-success' :
+                    activity.type === 'emergency' ? 'bg-emergency' :
+                    activity.type === 'warning' ? 'bg-warning' : 'bg-info'
+                  }`} />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium">{activity.action}</p>
+                    <p className="text-xs text-muted-foreground mt-1">{activity.time}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </Card>
 
@@ -117,7 +195,7 @@ export default function Dashboard() {
             <h2 className="text-lg font-semibold">Performance</h2>
           </div>
           <div className="space-y-4">
-            <div className="flex items-center justify-between p-4 rounded-xl bg-muted/30">
+            <div className="flex items-center justify-between p-4 rounded-xl bg-gradient-to-r from-emerald-100 to-emerald-200 border border-emerald-300 hover:shadow-md transition-all">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-success/10 flex items-center justify-center">
                   <Clock className="w-5 h-5 text-success" />
@@ -130,7 +208,7 @@ export default function Dashboard() {
               <span className="text-xl font-bold">4.2<span className="text-sm text-muted-foreground">min</span></span>
             </div>
             
-            <div className="flex items-center justify-between p-4 rounded-xl bg-muted/30">
+            <div className="flex items-center justify-between p-4 rounded-xl bg-gradient-to-r from-blue-100 to-blue-200 border border-blue-300 hover:shadow-md transition-all">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-info/10 flex items-center justify-center">
                   <Users className="w-5 h-5 text-info" />
@@ -143,7 +221,7 @@ export default function Dashboard() {
               <span className="text-xl font-bold">24</span>
             </div>
 
-            <div className="flex items-center justify-between p-4 rounded-xl bg-muted/30">
+            <div className="flex items-center justify-between p-4 rounded-xl bg-gradient-to-r from-orange-100 to-orange-200 border border-orange-300 hover:shadow-md transition-all">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-emergency/10 flex items-center justify-center">
                   <Activity className="w-5 h-5 text-emergency" />

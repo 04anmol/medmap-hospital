@@ -163,8 +163,8 @@ export default function Admissions() {
           <Card key={admission.id} className="p-6 shadow-card rounded-2xl border-2 bg-cyan-100 border-cyan-300 text-cyan-900">
             <div className="flex items-start justify-between mb-4">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                  <User className="w-6 h-6 text-primary" />
+                <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center">
+                  <User className="w-6 h-6 text-white" />
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold">{admission.patientName}</h3>

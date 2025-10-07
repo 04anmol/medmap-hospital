@@ -161,7 +161,9 @@ export default function Database() {
         {/* Database Status */}
         <Card className="p-6 shadow-card rounded-2xl border-2 bg-violet-100 border-violet-300 text-violet-900">
           <div className="flex items-center gap-2 mb-4">
-            <Database className="w-5 h-5 text-violet-600" />
+            <div className="w-8 h-8 bg-violet-600 rounded-lg flex items-center justify-center">
+              <Database className="w-4 h-4 text-white" />
+            </div>
             <h2 className="text-lg font-semibold text-violet-900">Database Status</h2>
           </div>
           <div className="space-y-4">
@@ -190,7 +192,9 @@ export default function Database() {
         {/* Quick Actions */}
         <Card className="p-6 shadow-card rounded-2xl border-2 bg-lime-100 border-lime-300 text-lime-900">
           <div className="flex items-center gap-2 mb-4">
-            <Activity className="w-5 h-5 text-lime-600" />
+            <div className="w-8 h-8 bg-lime-600 rounded-lg flex items-center justify-center">
+              <Activity className="w-4 h-4 text-white" />
+            </div>
             <h2 className="text-lg font-semibold text-lime-900">Quick Actions</h2>
           </div>
           <div className="space-y-3">
@@ -225,7 +229,9 @@ export default function Database() {
       {/* Backup History */}
       <Card className="p-6 shadow-card rounded-2xl border-2 bg-amber-100 border-amber-300 text-amber-900 mb-6">
         <div className="flex items-center gap-2 mb-4">
-          <Clock className="w-5 h-5 text-amber-600" />
+          <div className="w-8 h-8 bg-amber-600 rounded-lg flex items-center justify-center">
+            <Clock className="w-4 h-4 text-white" />
+          </div>
           <h2 className="text-lg font-semibold text-amber-900">Backup History</h2>
         </div>
         <div className="space-y-3">
@@ -256,7 +262,9 @@ export default function Database() {
       {/* System Tables */}
       <Card className="p-6 shadow-card rounded-2xl border-2 bg-orange-100 border-orange-300 text-orange-900">
         <div className="flex items-center gap-2 mb-4">
-          <Database className="w-5 h-5 text-orange-600" />
+          <div className="w-8 h-8 bg-orange-600 rounded-lg flex items-center justify-center">
+            <Database className="w-4 h-4 text-white" />
+          </div>
           <h2 className="text-lg font-semibold text-orange-900">System Tables</h2>
         </div>
         <div className="space-y-3">

@@ -153,8 +153,10 @@ export default function MedicalRecords() {
           <Card key={record.id} className="p-6 shadow-card rounded-2xl border-2 bg-slate-100 border-slate-300 text-slate-900">
             <div className="flex items-start justify-between mb-4">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                  {getRecordTypeIcon(record.recordType)}
+                <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center">
+                  <div className="text-white">
+                    {getRecordTypeIcon(record.recordType)}
+                  </div>
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold">{record.patientName}</h3>

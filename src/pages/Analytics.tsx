@@ -74,7 +74,9 @@ export default function Analytics() {
       {/* Key Metrics */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
         <Card className="p-6 text-center bg-sky-100 border-sky-300 text-sky-900 border-2">
-          <Users className="w-8 h-8 text-sky-600 mx-auto mb-2" />
+          <div className="w-12 h-12 bg-sky-600 rounded-full flex items-center justify-center mx-auto mb-2">
+            <Users className="w-6 h-6 text-white" />
+          </div>
           <h3 className="text-2xl font-bold text-sky-900">{analyticsData.patientMetrics.totalPatients}</h3>
           <p className="text-sm text-sky-700">Total Patients</p>
           <div className="flex items-center justify-center mt-2">
@@ -83,7 +85,9 @@ export default function Analytics() {
           </div>
         </Card>
         <Card className="p-6 text-center bg-lime-100 border-lime-300 text-lime-900 border-2">
-          <Activity className="w-8 h-8 text-lime-600 mx-auto mb-2" />
+          <div className="w-12 h-12 bg-lime-600 rounded-full flex items-center justify-center mx-auto mb-2">
+            <Activity className="w-6 h-6 text-white" />
+          </div>
           <h3 className="text-2xl font-bold text-lime-900">{analyticsData.patientMetrics.currentOccupancy}%</h3>
           <p className="text-sm text-lime-700">Bed Occupancy</p>
           <div className="flex items-center justify-center mt-2">
@@ -92,7 +96,9 @@ export default function Analytics() {
           </div>
         </Card>
         <Card className="p-6 text-center bg-orange-100 border-orange-300 text-orange-900 border-2">
-          <Clock className="w-8 h-8 text-orange-600 mx-auto mb-2" />
+          <div className="w-12 h-12 bg-orange-600 rounded-full flex items-center justify-center mx-auto mb-2">
+            <Clock className="w-6 h-6 text-white" />
+          </div>
           <h3 className="text-2xl font-bold text-orange-900">{analyticsData.performanceMetrics.avgWaitTime}</h3>
           <p className="text-sm text-orange-700">Avg Wait Time (min)</p>
           <div className="flex items-center justify-center mt-2">
@@ -101,7 +107,9 @@ export default function Analytics() {
           </div>
         </Card>
         <Card className="p-6 text-center bg-rose-100 border-rose-300 text-rose-900 border-2">
-          <Heart className="w-8 h-8 text-rose-600 mx-auto mb-2" />
+          <div className="w-12 h-12 bg-rose-600 rounded-full flex items-center justify-center mx-auto mb-2">
+            <Heart className="w-6 h-6 text-white" />
+          </div>
           <h3 className="text-2xl font-bold text-rose-900">{analyticsData.performanceMetrics.patientSatisfaction}</h3>
           <p className="text-sm text-rose-700">Satisfaction Score</p>
           <div className="flex items-center justify-center mt-2">
@@ -116,7 +124,9 @@ export default function Analytics() {
         {/* Patient Flow */}
         <Card className="p-6 shadow-card rounded-2xl border-2 bg-indigo-100 border-indigo-300 text-indigo-900">
           <div className="flex items-center gap-2 mb-4">
-            <BarChart3 className="w-5 h-5 text-indigo-600" />
+            <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center">
+              <BarChart3 className="w-4 h-4 text-white" />
+            </div>
             <h2 className="text-lg font-semibold text-indigo-900">Patient Flow</h2>
           </div>
           <div className="space-y-4">
@@ -138,7 +148,9 @@ export default function Analytics() {
         {/* Resource Utilization */}
         <Card className="p-6 shadow-card rounded-2xl border-2 bg-fuchsia-100 border-fuchsia-300 text-fuchsia-900">
           <div className="flex items-center gap-2 mb-4">
-            <PieChart className="w-5 h-5 text-fuchsia-600" />
+            <div className="w-8 h-8 bg-fuchsia-600 rounded-lg flex items-center justify-center">
+              <PieChart className="w-4 h-4 text-white" />
+            </div>
             <h2 className="text-lg font-semibold text-fuchsia-900">Resource Utilization</h2>
           </div>
           <div className="space-y-4">
@@ -178,7 +190,9 @@ export default function Analytics() {
         {/* Performance Indicators */}
         <Card className="p-6 shadow-card rounded-2xl border-2 bg-teal-100 border-teal-300 text-teal-900">
           <div className="flex items-center gap-2 mb-4">
-            <TrendingUp className="w-5 h-5 text-teal-600" />
+            <div className="w-8 h-8 bg-teal-600 rounded-lg flex items-center justify-center">
+              <TrendingUp className="w-4 h-4 text-white" />
+            </div>
             <h2 className="text-lg font-semibold text-teal-900">Performance Indicators</h2>
           </div>
           <div className="space-y-4">
@@ -200,7 +214,9 @@ export default function Analytics() {
         {/* Financial Overview */}
         <Card className="p-6 shadow-card rounded-2xl border-2 bg-emerald-100 border-emerald-300 text-emerald-900">
           <div className="flex items-center gap-2 mb-4">
-            <BarChart3 className="w-5 h-5 text-emerald-600" />
+            <div className="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center">
+              <BarChart3 className="w-4 h-4 text-white" />
+            </div>
             <h2 className="text-lg font-semibold text-emerald-900">Financial Overview</h2>
           </div>
           <div className="space-y-4">

@@ -63,7 +63,9 @@ export default function Settings() {
         {/* Notification Settings */}
         <Card className="p-6 shadow-card rounded-2xl border-2 bg-sky-100 border-sky-300 text-sky-900">
           <div className="flex items-center gap-2 mb-6">
-            <Bell className="w-5 h-5 text-sky-600" />
+            <div className="w-8 h-8 bg-sky-600 rounded-lg flex items-center justify-center">
+              <Bell className="w-4 h-4 text-white" />
+            </div>
             <h2 className="text-lg font-semibold text-sky-900">Notification Settings</h2>
           </div>
           <div className="space-y-4">
@@ -113,7 +115,9 @@ export default function Settings() {
         {/* Security Settings */}
         <Card className="p-6 shadow-card rounded-2xl border-2 bg-red-100 border-red-300 text-red-900">
           <div className="flex items-center gap-2 mb-6">
-            <Shield className="w-5 h-5 text-red-600" />
+            <div className="w-8 h-8 bg-red-600 rounded-lg flex items-center justify-center">
+              <Shield className="w-4 h-4 text-white" />
+            </div>
             <h2 className="text-lg font-semibold text-red-900">Security Settings</h2>
           </div>
           <div className="space-y-4">
@@ -151,7 +155,9 @@ export default function Settings() {
         {/* System Settings */}
         <Card className="p-6 shadow-card rounded-2xl border-2 bg-slate-100 border-slate-300 text-slate-900">
           <div className="flex items-center gap-2 mb-6">
-            <Database className="w-5 h-5 text-slate-600" />
+            <div className="w-8 h-8 bg-slate-600 rounded-lg flex items-center justify-center">
+              <Database className="w-4 h-4 text-white" />
+            </div>
             <h2 className="text-lg font-semibold text-slate-900">System Settings</h2>
           </div>
           <div className="space-y-4">
@@ -191,7 +197,9 @@ export default function Settings() {
         {/* Hospital Information */}
         <Card className="p-6 shadow-card rounded-2xl border-2 bg-cyan-100 border-cyan-300 text-cyan-900">
           <div className="flex items-center gap-2 mb-6">
-            <Users className="w-5 h-5 text-cyan-600" />
+            <div className="w-8 h-8 bg-cyan-600 rounded-lg flex items-center justify-center">
+              <Users className="w-4 h-4 text-white" />
+            </div>
             <h2 className="text-lg font-semibold text-cyan-900">Hospital Information</h2>
           </div>
           <div className="space-y-4">
