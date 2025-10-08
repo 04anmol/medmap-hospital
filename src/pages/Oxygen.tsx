@@ -174,7 +174,7 @@ export default function Oxygen() {
             Add Oxygen Stock
           </Button>
         </div>
-        <div className="grid gap-4">
+        <div className="grid md:grid-cols-2 gap-4">
           {oxygenStock.map((item) => (
             <Card
               key={item.id}
@@ -261,7 +261,7 @@ export default function Oxygen() {
           </Button>
         </div>
 
-        <div className="grid gap-4">
+        <div className="grid md:grid-cols-2 gap-4">
           {equipment.map((item) => (
             <Card
               key={item.id}

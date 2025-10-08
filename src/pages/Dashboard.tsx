@@ -84,7 +84,7 @@ export default function Dashboard() {
       {/* Header with Gradient */}
       <div className="gradient-primary rounded-2xl p-6 md:p-8 mb-6 text-white">
         <h1 className="text-2xl md:text-3xl font-bold mb-2">Dashboard</h1>
-        <p className="text-white/90">New York Presbyterian Hospital</p>
+        <p className="text-white/90">Apollo Hospitals, Delhi</p>
       </div>
 
       {/* KPI Cards Grid */}
@@ -92,10 +92,10 @@ export default function Dashboard() {
         {kpis.map((kpi) => {
           const Icon = kpi.icon;
           return (
-            <Card key={kpi.label} className="p-4 shadow-card rounded-2xl border">
-              <div className="flex items-start justify-between mb-3">
-                <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${kpi.iconColor}`}>
-                  <Icon className="w-5 h-5 text-white" />
+            <Card key={kpi.label} className="p-6 shadow-card rounded-2xl border-4 border-primary bg-primary/10 hover:shadow-lg transition-all duration-300">
+              <div className="flex items-start justify-between mb-4">
+                <div className={`w-12 h-12 rounded-full flex items-center justify-center ${kpi.iconColor}`}>
+                  <Icon className="w-6 h-6 text-white" />
                 </div>
                 {kpi.trend && (
                   <span className={`text-xs font-medium px-2 py-1 rounded-full ${
@@ -107,31 +107,31 @@ export default function Dashboard() {
                 )}
               </div>
               
-              <div className="mb-3">
-                <div className="flex items-baseline gap-1 mb-1">
-                  <span className="text-2xl font-bold">{kpi.value}</span>
-                  <span className="text-muted-foreground">/{kpi.total}</span>
+              <div className="mb-4">
+                <div className="flex items-baseline gap-1 mb-2">
+                  <span className="text-2xl font-bold text-primary">{kpi.value}</span>
+                  <span className="text-primary/70">/{kpi.total}</span>
                 </div>
-                <p className="text-sm text-muted-foreground">{kpi.label}</p>
-                <p className="text-xs text-muted-foreground">{kpi.department}</p>
+                <p className="text-base font-medium text-primary">{kpi.label}</p>
+                <p className="text-sm text-primary/70">{kpi.department}</p>
               </div>
 
-              <div className="space-y-2">
+              <div className="space-y-3">
                 <div className="flex justify-between items-center">
-                  <span className="text-xs text-muted-foreground">Utilization</span>
-                  <span className="text-xs font-medium">{kpi.utilization}</span>
+                  <span className="text-sm text-primary/70">Utilization</span>
+                  <span className="text-sm font-medium text-primary">{kpi.utilization}</span>
                 </div>
                 
-                <div className="w-full bg-muted rounded-full h-1.5">
+                <div className="w-full bg-primary/20 rounded-full h-2">
                   <div 
-                    className={`h-1.5 rounded-full ${
+                    className={`h-2 rounded-full ${
                       kpi.status === 'available' ? 'bg-success' : 'bg-warning'
                     }`}
                     style={{ width: kpi.utilization }}
                   ></div>
                 </div>
 
-                <div className="flex justify-between items-center text-xs text-muted-foreground">
+                <div className="flex justify-between items-center text-sm text-primary/70">
                   <span>Next: {kpi.nextAvailable}</span>
                   <span>{kpi.lastUpdate}</span>
                 </div>

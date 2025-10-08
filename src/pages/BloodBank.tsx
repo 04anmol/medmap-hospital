@@ -146,7 +146,7 @@ export default function BloodBank() {
       </div>
 
       {/* Inventory Grid */}
-      <div className="grid gap-4">
+      <div className="grid md:grid-cols-2 gap-4">
         {inventory
           .filter((item) => filter === "all" || item.component === filter)
           .map((item) => {

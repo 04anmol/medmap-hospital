@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { AlertCircle, Clock, MapPin, Phone, User, Droplet, Wind } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { AlertCircle, Clock, MapPin, Phone, User, Droplet, Wind, X, Car } from "lucide-react";
 import { StatusBadge } from "@/components/ui/status-badge";
 import { toast } from "sonner";
 
@@ -18,102 +19,159 @@ interface EmergencyRequest {
   requestTime: string;
   slaMinutes: number;
   resources: string[];
+  driver: string;
+  vehicleNumber: string;
 }
 
 const mockRequests: EmergencyRequest[] = [
   {
     id: "REQ-001",
     priority: "critical",
-    patient: { name: "Sarah Johnson", age: 45, bloodType: "A+" },
-    location: "2.3 miles away",
-    distance: "2.3",
-    requestTime: "2 mins ago",
-    slaMinutes: 120,
-    resources: ["ICU Bed", "Blood Transfusion"],
+    patient: { name: "Aditya Kotnala", age: 32, bloodType: "B+" },
+    location: "1.2 km away",
+    distance: "1.2",
+    requestTime: "1 min ago",
+    slaMinutes: 119,
+    resources: ["ICU Bed", "Ventilator", "Blood Transfusion"],
+    driver: "Prince Jangra",
+    vehicleNumber: "DL-01-AB-1234"
   },
   {
     id: "REQ-002",
+    priority: "critical",
+    patient: { name: "Priya Sharma", age: 45, bloodType: "A+" },
+    location: "2.3 km away",
+    distance: "2.3",
+    requestTime: "2 mins ago",
+    slaMinutes: 118,
+    resources: ["ICU Bed", "Blood Transfusion"],
+    driver: "Rajesh Kumar",
+    vehicleNumber: "DL-01-CD-5678"
+  },
+  {
+    id: "REQ-003",
     priority: "high",
-    patient: { name: "Mike Chen", age: 62, bloodType: "O-" },
-    location: "3.8 miles away",
+    patient: { name: "Arjun Singh", age: 62, bloodType: "O-" },
+    location: "3.8 km away",
     distance: "3.8",
     requestTime: "5 mins ago",
     slaMinutes: 115,
     resources: ["Oxygen Support"],
+    driver: "Vikram Mehta",
+    vehicleNumber: "DL-01-EF-9012"
   },
   {
-    id: "REQ-003",
+    id: "REQ-004",
     priority: "medium",
-    patient: { name: "Emily Davis", age: 28, bloodType: "B+" },
-    location: "5.2 miles away",
+    patient: { name: "Kavya Reddy", age: 28, bloodType: "B+" },
+    location: "5.2 km away",
     distance: "5.2",
     requestTime: "8 mins ago",
     slaMinutes: 112,
     resources: ["ICU Bed"],
+    driver: "Suresh Patel",
+    vehicleNumber: "DL-01-GH-3456"
   },
   {
-    id: "REQ-004",
+    id: "REQ-005",
     priority: "critical",
-    patient: { name: "Robert Wilson", age: 67, bloodType: "AB-" },
-    location: "1.8 miles away",
+    patient: { name: "Rohit Gupta", age: 67, bloodType: "AB-" },
+    location: "1.8 km away",
     distance: "1.8",
     requestTime: "1 min ago",
     slaMinutes: 119,
     resources: ["ICU Bed", "Ventilator", "Blood Transfusion"],
+    driver: "Amit Verma",
+    vehicleNumber: "DL-01-IJ-7890"
   },
   {
-    id: "REQ-005",
+    id: "REQ-006",
     priority: "high",
-    patient: { name: "Lisa Martinez", age: 34, bloodType: "O+" },
-    location: "4.1 miles away",
+    patient: { name: "Neha Agarwal", age: 34, bloodType: "O+" },
+    location: "4.1 km away",
     distance: "4.1",
     requestTime: "6 mins ago",
     slaMinutes: 114,
     resources: ["Oxygen Support", "ICU Bed"],
+    driver: "Deepak Joshi",
+    vehicleNumber: "DL-01-KL-1234"
   },
   {
-    id: "REQ-006",
+    id: "REQ-007",
     priority: "medium",
-    patient: { name: "David Thompson", age: 52, bloodType: "B-" },
-    location: "6.7 miles away",
+    patient: { name: "Vikram Nair", age: 52, bloodType: "B-" },
+    location: "6.7 km away",
     distance: "6.7",
     requestTime: "10 mins ago",
     slaMinutes: 110,
     resources: ["ICU Bed"],
+    driver: "Ravi Iyer",
+    vehicleNumber: "DL-01-MN-5678"
   },
   {
-    id: "REQ-007",
+    id: "REQ-008",
     priority: "critical",
-    patient: { name: "Anna Rodriguez", age: 29, bloodType: "A-" },
-    location: "2.9 miles away",
+    patient: { name: "Ananya Das", age: 29, bloodType: "A-" },
+    location: "2.9 km away",
     distance: "2.9",
     requestTime: "3 mins ago",
     slaMinutes: 117,
     resources: ["Blood Transfusion", "ICU Bed"],
+    driver: "Kiran Rao",
+    vehicleNumber: "DL-01-OP-9012"
   },
   {
-    id: "REQ-008",
+    id: "REQ-009",
     priority: "high",
-    patient: { name: "James Brown", age: 71, bloodType: "O-" },
-    location: "3.5 miles away",
+    patient: { name: "Suresh Kumar", age: 71, bloodType: "O-" },
+    location: "3.5 km away",
     distance: "3.5",
     requestTime: "7 mins ago",
     slaMinutes: 113,
     resources: ["Ventilator", "Oxygen Support"],
+    driver: "Manoj Tiwari",
+    vehicleNumber: "DL-01-QR-3456"
   },
 ];
 
 export default function LiveRequests() {
   const [requests, setRequests] = useState(mockRequests);
+  const [showResourceModal, setShowResourceModal] = useState(false);
+  const [selectedRequest, setSelectedRequest] = useState<EmergencyRequest | null>(null);
+  const [selectedResources, setSelectedResources] = useState<string[]>([]);
 
-  const handleAccept = (id: string) => {
-    toast.success("Emergency request accepted!");
-    setRequests(requests.filter((r) => r.id !== id));
+  const availableResources = [
+    "ICU Bed", "Ventilator", "Blood Transfusion", "Oxygen Support", 
+    "Emergency Medicine", "Surgical Team", "Cardiology Team", "Neurology Team"
+  ];
+
+  const handleAccept = (request: EmergencyRequest) => {
+    setSelectedRequest(request);
+    setSelectedResources(request.resources);
+    setShowResourceModal(true);
+  };
+
+  const handleResourceAssignment = () => {
+    if (selectedRequest && selectedResources.length > 0) {
+      toast.success(`Emergency request accepted! Assigned resources: ${selectedResources.join(", ")}`);
+      setRequests(requests.filter((r) => r.id !== selectedRequest.id));
+      setShowResourceModal(false);
+      setSelectedRequest(null);
+      setSelectedResources([]);
+    }
   };
 
   const handleDecline = (id: string) => {
     toast.error("Request declined");
     setRequests(requests.filter((r) => r.id !== id));
+  };
+
+  const toggleResource = (resource: string) => {
+    setSelectedResources(prev => 
+      prev.includes(resource) 
+        ? prev.filter(r => r !== resource)
+        : [...prev, resource]
+    );
   };
 
   const getPriorityColor = (priority: string) => {
@@ -216,41 +274,49 @@ export default function LiveRequests() {
                 </div>
 
                 {/* Patient Info */}
-                <div className="grid md:grid-cols-2 gap-4 mb-4">
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2">
-                      <MapPin className="w-5 h-5 text-orange-600" />
-                      <span className="text-base text-orange-800">{request.location}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Clock className="w-5 h-5 text-orange-600" />
-                      <span className="text-base text-orange-800">Requested: {request.requestTime}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Droplet className="w-5 h-5 text-orange-600" />
-                      <span className="text-base text-orange-800">Blood Type: {request.patient.bloodType}</span>
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <p className="text-base font-medium text-orange-900">Requested Resources:</p>
-                    <div className="flex flex-wrap gap-2">
-                      {request.resources.map((resource, idx) => (
-                        <span key={idx} className="bg-orange-200/50 text-orange-800 px-3 py-1 rounded-full text-sm font-medium">
-                          {resource === "ICU Bed" && <Wind className="w-4 h-4 inline mr-1" />}
-                          {resource === "Blood Transfusion" && <Droplet className="w-4 h-4 inline mr-1" />}
-                          {resource === "Oxygen Support" && <Wind className="w-4 h-4 inline mr-1" />}
-                          {resource === "Ventilator" && <Wind className="w-4 h-4 inline mr-1" />}
-                          {resource}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
+                        <div className="grid md:grid-cols-2 gap-4 mb-4">
+                          <div className="space-y-2">
+                            <div className="flex items-center gap-2">
+                              <MapPin className="w-5 h-5 text-orange-600" />
+                              <span className="text-base text-orange-800">{request.location}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Clock className="w-5 h-5 text-orange-600" />
+                              <span className="text-base text-orange-800">Requested: {request.requestTime}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Droplet className="w-5 h-5 text-orange-600" />
+                              <span className="text-base text-orange-800">Blood Type: {request.patient.bloodType}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <User className="w-5 h-5 text-orange-600" />
+                              <span className="text-base text-orange-800">Driver: {request.driver}</span>
+                            </div>
+                          </div>
+                          <div className="space-y-2">
+                            <div className="flex items-center gap-2">
+                              <Car className="w-5 h-5 text-orange-600" />
+                              <span className="text-base text-orange-800">Vehicle: {request.vehicleNumber}</span>
+                            </div>
+                            <p className="text-base font-medium text-orange-900">Requested Resources:</p>
+                            <div className="flex flex-wrap gap-2">
+                              {request.resources.map((resource, idx) => (
+                                <span key={idx} className="bg-orange-200/50 text-orange-800 px-3 py-1 rounded-full text-sm font-medium">
+                                  {resource === "ICU Bed" && <Wind className="w-4 h-4 inline mr-1" />}
+                                  {resource === "Blood Transfusion" && <Droplet className="w-4 h-4 inline mr-1" />}
+                                  {resource === "Oxygen Support" && <Wind className="w-4 h-4 inline mr-1" />}
+                                  {resource === "Ventilator" && <Wind className="w-4 h-4 inline mr-1" />}
+                                  {resource}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
                 </div>
 
                 {/* Actions */}
                 <div className="flex gap-2">
                   <Button
-                    onClick={() => handleAccept(request.id)}
+                    onClick={() => handleAccept(request)}
                     className="flex-1 bg-green-600 border-green-600 text-white hover:bg-green-700 text-base font-medium"
                   >
                     <Clock className="w-5 h-5 mr-2" />
@@ -274,6 +340,71 @@ export default function LiveRequests() {
           </div>
         )}
       </div>
+
+      {/* Resource Assignment Modal */}
+      {showResourceModal && selectedRequest && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <Card className="w-full max-w-2xl mx-4 p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-semibold">Assign Resources for {selectedRequest.patient.name}</h2>
+              <Button variant="ghost" size="sm" onClick={() => setShowResourceModal(false)}>
+                <X className="w-4 h-4" />
+              </Button>
+            </div>
+
+            <div className="space-y-4">
+              <div className="grid md:grid-cols-2 gap-4">
+                <div>
+                  <h3 className="font-medium mb-2">Patient Details:</h3>
+                  <p className="text-sm text-muted-foreground">Name: {selectedRequest.patient.name}</p>
+                  <p className="text-sm text-muted-foreground">Age: {selectedRequest.patient.age}</p>
+                  <p className="text-sm text-muted-foreground">Blood Type: {selectedRequest.patient.bloodType}</p>
+                  <p className="text-sm text-muted-foreground">Driver: {selectedRequest.driver}</p>
+                  <p className="text-sm text-muted-foreground">Vehicle: {selectedRequest.vehicleNumber}</p>
+                </div>
+                <div>
+                  <h3 className="font-medium mb-2">Requested Resources:</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedRequest.resources.map((resource, idx) => (
+                      <span key={idx} className="bg-orange-200/50 text-orange-800 px-2 py-1 rounded-full text-sm">
+                        {resource}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h3 className="font-medium mb-3">Select Resources to Assign:</h3>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                  {availableResources.map((resource) => (
+                    <button
+                      key={resource}
+                      onClick={() => toggleResource(resource)}
+                      className={`p-3 rounded-lg border text-sm font-medium transition-all ${
+                        selectedResources.includes(resource)
+                          ? 'bg-green-100 border-green-300 text-green-800'
+                          : 'bg-gray-100 border-gray-300 text-gray-700 hover:bg-gray-200'
+                      }`}
+                    >
+                      {resource}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex gap-2 pt-4">
+                <Button onClick={handleResourceAssignment} className="flex-1" disabled={selectedResources.length === 0}>
+                  Assign Resources ({selectedResources.length})
+                </Button>
+                <Button variant="outline" onClick={() => setShowResourceModal(false)} className="flex-1">
+                  Cancel
+                </Button>
+              </div>
+            </div>
+          </Card>
+        </div>
+      )}
     </div>
   );
 }

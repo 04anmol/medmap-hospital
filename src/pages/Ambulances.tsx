@@ -203,7 +203,7 @@ export default function Ambulances() {
       </div>
 
       {/* Ambulances Grid */}
-      <div className="grid gap-4">
+      <div className="grid md:grid-cols-2 gap-4">
         {filteredAmbulances.map((ambulance) => (
           <Card
             key={ambulance.id}
