@@ -159,7 +159,7 @@ export default function Database() {
 
       <div className="grid lg:grid-cols-2 gap-6 mb-6">
         {/* Database Status */}
-        <Card className="p-6 shadow-card rounded-2xl border-2 bg-violet-100 border-violet-300 text-violet-900">
+        <Card className="p-6 shadow-card rounded-2xl border-2 bg-violet-100 border-violet-300 text-violet-900 hover:shadow-lg transition-all duration-300">
           <div className="flex items-center gap-2 mb-4">
             <div className="w-8 h-8 bg-violet-600 rounded-lg flex items-center justify-center">
               <Database className="w-4 h-4 text-white" />
@@ -190,7 +190,7 @@ export default function Database() {
         </Card>
 
         {/* Quick Actions */}
-        <Card className="p-6 shadow-card rounded-2xl border-2 bg-lime-100 border-lime-300 text-lime-900">
+        <Card className="p-6 shadow-card rounded-2xl border-2 bg-lime-100 border-lime-300 text-lime-900 hover:shadow-lg transition-all duration-300">
           <div className="flex items-center gap-2 mb-4">
             <div className="w-8 h-8 bg-lime-600 rounded-lg flex items-center justify-center">
               <Activity className="w-4 h-4 text-white" />
@@ -227,7 +227,7 @@ export default function Database() {
       </div>
 
       {/* Backup History */}
-      <Card className="p-6 shadow-card rounded-2xl border-2 bg-amber-100 border-amber-300 text-amber-900 mb-6">
+      <Card className="p-6 shadow-card rounded-2xl border-2 bg-amber-100 border-amber-300 text-amber-900 mb-6 hover:shadow-lg transition-all duration-300">
         <div className="flex items-center gap-2 mb-4">
           <div className="w-8 h-8 bg-amber-600 rounded-lg flex items-center justify-center">
             <Clock className="w-4 h-4 text-white" />
@@ -260,7 +260,7 @@ export default function Database() {
       </Card>
 
       {/* System Tables */}
-      <Card className="p-6 shadow-card rounded-2xl border-2 bg-orange-100 border-orange-300 text-orange-900">
+      <Card className="p-6 shadow-card rounded-2xl border-2 bg-orange-100 border-orange-300 text-orange-900 hover:shadow-lg transition-all duration-300">
         <div className="flex items-center gap-2 mb-4">
           <div className="w-8 h-8 bg-orange-600 rounded-lg flex items-center justify-center">
             <Database className="w-4 h-4 text-white" />

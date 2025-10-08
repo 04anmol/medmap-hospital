@@ -80,6 +80,17 @@ const admissions = [
 export default function Admissions() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("All");
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [newAdmission, setNewAdmission] = useState({
+    patientName: "",
+    age: "",
+    gender: "",
+    phone: "",
+    email: "",
+    department: "",
+    priority: "Medium",
+    notes: ""
+  });
 
   const filteredAdmissions = admissions.filter(admission => {
     const matchesSearch = admission.patientName.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -95,6 +106,36 @@ export default function Admissions() {
       case "Medium": return "bg-info text-info-foreground";
       case "Low": return "bg-success text-success-foreground";
       default: return "bg-muted text-muted-foreground";
+    }
+  };
+
+  const handleAddAdmission = () => {
+    if (newAdmission.patientName && newAdmission.age && newAdmission.gender && newAdmission.phone) {
+      const admission = {
+        id: `A${String(admissions.length + 1).padStart(3, '0')}`,
+        patientName: newAdmission.patientName,
+        age: parseInt(newAdmission.age),
+        gender: newAdmission.gender,
+        admissionDate: new Date().toISOString().split('T')[0],
+        status: "Pending",
+        department: newAdmission.department || "General",
+        priority: newAdmission.priority,
+        contact: newAdmission.phone,
+        email: newAdmission.email || "",
+        notes: newAdmission.notes || ""
+      };
+      admissions.push(admission);
+      setNewAdmission({
+        patientName: "",
+        age: "",
+        gender: "",
+        phone: "",
+        email: "",
+        department: "",
+        priority: "Medium",
+        notes: ""
+      });
+      setShowAddModal(false);
     }
   };
 
@@ -150,7 +191,7 @@ export default function Admissions() {
             <Filter className="w-4 h-4 mr-2" />
             Filters
           </Button>
-          <Button className="rounded-xl gradient-primary text-white">
+          <Button onClick={() => setShowAddModal(true)} className="rounded-xl gradient-primary text-white">
             <Plus className="w-4 h-4 mr-2" />
             New Admission
           </Button>
@@ -160,7 +201,7 @@ export default function Admissions() {
       {/* Admission Cards */}
       <div className="grid gap-4">
         {filteredAdmissions.map((admission) => (
-          <Card key={admission.id} className="p-6 shadow-card rounded-2xl border-2 bg-cyan-100 border-cyan-300 text-cyan-900">
+          <Card key={admission.id} className="p-6 shadow-card rounded-2xl border-2 bg-cyan-100 border-cyan-300 text-cyan-900 hover:shadow-lg transition-all duration-300">
             <div className="flex items-start justify-between mb-4">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center">
@@ -258,6 +299,125 @@ export default function Admissions() {
           <h3 className="text-lg font-semibold mb-2">No admissions found</h3>
           <p className="text-muted-foreground">Try adjusting your search or filter criteria</p>
         </Card>
+      )}
+
+      {/* Add Admission Modal */}
+      {showAddModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <Card className="w-full max-w-md mx-4 p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-semibold">New Admission Request</h2>
+              <Button variant="ghost" size="sm" onClick={() => setShowAddModal(false)}>
+                <X className="w-4 h-4" />
+              </Button>
+            </div>
+            
+            <div className="space-y-4">
+              <div>
+                <label className="text-sm font-medium">Patient Name *</label>
+                <Input
+                  value={newAdmission.patientName}
+                  onChange={(e) => setNewAdmission({...newAdmission, patientName: e.target.value})}
+                  placeholder="Enter patient's full name"
+                />
+              </div>
+              
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="text-sm font-medium">Age *</label>
+                  <Input
+                    type="number"
+                    value={newAdmission.age}
+                    onChange={(e) => setNewAdmission({...newAdmission, age: e.target.value})}
+                    placeholder="Age"
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium">Gender *</label>
+                  <select
+                    value={newAdmission.gender}
+                    onChange={(e) => setNewAdmission({...newAdmission, gender: e.target.value})}
+                    className="w-full px-3 py-2 border border-input rounded-md"
+                  >
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label className="text-sm font-medium">Phone Number *</label>
+                <Input
+                  value={newAdmission.phone}
+                  onChange={(e) => setNewAdmission({...newAdmission, phone: e.target.value})}
+                  placeholder="+1-555-0123"
+                />
+              </div>
+
+              <div>
+                <label className="text-sm font-medium">Email</label>
+                <Input
+                  type="email"
+                  value={newAdmission.email}
+                  onChange={(e) => setNewAdmission({...newAdmission, email: e.target.value})}
+                  placeholder="patient@email.com"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="text-sm font-medium">Department</label>
+                  <select
+                    value={newAdmission.department}
+                    onChange={(e) => setNewAdmission({...newAdmission, department: e.target.value})}
+                    className="w-full px-3 py-2 border border-input rounded-md"
+                  >
+                    <option value="">Select Department</option>
+                    <option value="Emergency">Emergency</option>
+                    <option value="ICU">ICU</option>
+                    <option value="Cardiology">Cardiology</option>
+                    <option value="Neurology">Neurology</option>
+                    <option value="General">General</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="text-sm font-medium">Priority</label>
+                  <select
+                    value={newAdmission.priority}
+                    onChange={(e) => setNewAdmission({...newAdmission, priority: e.target.value})}
+                    className="w-full px-3 py-2 border border-input rounded-md"
+                  >
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                    <option value="Critical">Critical</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label className="text-sm font-medium">Notes</label>
+                <textarea
+                  value={newAdmission.notes}
+                  onChange={(e) => setNewAdmission({...newAdmission, notes: e.target.value})}
+                  placeholder="Additional notes or medical history"
+                  className="w-full px-3 py-2 border border-input rounded-md h-20 resize-none"
+                />
+              </div>
+
+              <div className="flex gap-2 pt-4">
+                <Button onClick={handleAddAdmission} className="flex-1">
+                  Submit Admission
+                </Button>
+                <Button variant="outline" onClick={() => setShowAddModal(false)} className="flex-1">
+                  Cancel
+                </Button>
+              </div>
+            </div>
+          </Card>
+        </div>
       )}
     </div>
   );

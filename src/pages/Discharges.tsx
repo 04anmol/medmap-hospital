@@ -88,6 +88,17 @@ const discharges = [
 export default function Discharges() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("All");
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [newDischarge, setNewDischarge] = useState({
+    patientName: "",
+    age: "",
+    gender: "",
+    phone: "",
+    email: "",
+    dischargeDate: "",
+    dischargeType: "Routine",
+    notes: ""
+  });
 
   const filteredDischarges = discharges.filter(discharge => {
     const matchesSearch = discharge.patientName.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -102,6 +113,36 @@ export default function Discharges() {
       case "Processing": return "bg-warning text-warning-foreground";
       case "Completed": return "bg-info text-info-foreground";
       default: return "bg-muted text-muted-foreground";
+    }
+  };
+
+  const handleAddDischarge = () => {
+    if (newDischarge.patientName && newDischarge.age && newDischarge.gender && newDischarge.phone) {
+      const discharge = {
+        id: `D${String(discharges.length + 1).padStart(3, '0')}`,
+        patientName: newDischarge.patientName,
+        age: parseInt(newDischarge.age),
+        gender: newDischarge.gender,
+        admissionDate: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // 7 days ago
+        dischargeDate: newDischarge.dischargeDate || new Date().toISOString().split('T')[0],
+        status: "Processing",
+        dischargeType: newDischarge.dischargeType,
+        contact: newDischarge.phone,
+        email: newDischarge.email || "",
+        dischargeNotes: newDischarge.notes || ""
+      };
+      discharges.push(discharge);
+      setNewDischarge({
+        patientName: "",
+        age: "",
+        gender: "",
+        phone: "",
+        email: "",
+        dischargeDate: "",
+        dischargeType: "Routine",
+        notes: ""
+      });
+      setShowAddModal(false);
     }
   };
 
@@ -148,7 +189,7 @@ export default function Discharges() {
             <Filter className="w-4 h-4 mr-2" />
             Filters
           </Button>
-          <Button className="rounded-xl gradient-primary text-white">
+          <Button onClick={() => setShowAddModal(true)} className="rounded-xl gradient-primary text-white">
             <Plus className="w-4 h-4 mr-2" />
             New Discharge
           </Button>
@@ -158,7 +199,7 @@ export default function Discharges() {
       {/* Discharge Cards */}
       <div className="grid gap-4">
         {filteredDischarges.map((discharge) => (
-          <Card key={discharge.id} className="p-6 shadow-card rounded-2xl border-2 bg-emerald-100 border-emerald-300 text-emerald-900">
+          <Card key={discharge.id} className="p-6 shadow-card rounded-2xl border-2 bg-emerald-100 border-emerald-300 text-emerald-900 hover:shadow-lg transition-all duration-300">
             <div className="flex items-start justify-between mb-4">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center">
@@ -271,6 +312,118 @@ export default function Discharges() {
           <h3 className="text-lg font-semibold mb-2">No discharges found</h3>
           <p className="text-muted-foreground">Try adjusting your search or filter criteria</p>
         </Card>
+      )}
+
+      {/* Add Discharge Modal */}
+      {showAddModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <Card className="w-full max-w-md mx-4 p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-semibold">New Discharge</h2>
+              <Button variant="ghost" size="sm" onClick={() => setShowAddModal(false)}>
+                <X className="w-4 h-4" />
+              </Button>
+            </div>
+            
+            <div className="space-y-4">
+              <div>
+                <label className="text-sm font-medium">Patient Name *</label>
+                <Input
+                  value={newDischarge.patientName}
+                  onChange={(e) => setNewDischarge({...newDischarge, patientName: e.target.value})}
+                  placeholder="Enter patient's full name"
+                />
+              </div>
+              
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="text-sm font-medium">Age *</label>
+                  <Input
+                    type="number"
+                    value={newDischarge.age}
+                    onChange={(e) => setNewDischarge({...newDischarge, age: e.target.value})}
+                    placeholder="Age"
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium">Gender *</label>
+                  <select
+                    value={newDischarge.gender}
+                    onChange={(e) => setNewDischarge({...newDischarge, gender: e.target.value})}
+                    className="w-full px-3 py-2 border border-input rounded-md"
+                  >
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label className="text-sm font-medium">Phone Number *</label>
+                <Input
+                  value={newDischarge.phone}
+                  onChange={(e) => setNewDischarge({...newDischarge, phone: e.target.value})}
+                  placeholder="+1-555-0123"
+                />
+              </div>
+
+              <div>
+                <label className="text-sm font-medium">Email</label>
+                <Input
+                  type="email"
+                  value={newDischarge.email}
+                  onChange={(e) => setNewDischarge({...newDischarge, email: e.target.value})}
+                  placeholder="patient@email.com"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="text-sm font-medium">Discharge Date</label>
+                  <Input
+                    type="date"
+                    value={newDischarge.dischargeDate}
+                    onChange={(e) => setNewDischarge({...newDischarge, dischargeDate: e.target.value})}
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium">Discharge Type</label>
+                  <select
+                    value={newDischarge.dischargeType}
+                    onChange={(e) => setNewDischarge({...newDischarge, dischargeType: e.target.value})}
+                    className="w-full px-3 py-2 border border-input rounded-md"
+                  >
+                    <option value="Routine">Routine</option>
+                    <option value="Against Medical Advice">Against Medical Advice</option>
+                    <option value="Transfer">Transfer</option>
+                    <option value="Deceased">Deceased</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label className="text-sm font-medium">Discharge Notes</label>
+                <textarea
+                  value={newDischarge.notes}
+                  onChange={(e) => setNewDischarge({...newDischarge, notes: e.target.value})}
+                  placeholder="Discharge instructions and follow-up care"
+                  className="w-full px-3 py-2 border border-input rounded-md h-20 resize-none"
+                />
+              </div>
+
+              <div className="flex gap-2 pt-4">
+                <Button onClick={handleAddDischarge} className="flex-1">
+                  Process Discharge
+                </Button>
+                <Button variant="outline" onClick={() => setShowAddModal(false)} className="flex-1">
+                  Cancel
+                </Button>
+              </div>
+            </div>
+          </Card>
+        </div>
       )}
     </div>
   );

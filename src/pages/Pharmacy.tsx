@@ -175,7 +175,7 @@ export default function Pharmacy() {
       {/* Medication Cards */}
       <div className="grid gap-4">
         {filteredMedications.map((med) => (
-          <Card key={med.id} className="p-6 shadow-card rounded-2xl border-2 bg-violet-100 border-violet-300 text-violet-900">
+          <Card key={med.id} className="p-6 shadow-card rounded-2xl border-2 bg-violet-100 border-violet-300 text-violet-900 hover:shadow-lg transition-all duration-300">
             <div className="flex items-start justify-between mb-4">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center">

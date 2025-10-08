@@ -78,6 +78,16 @@ const medicalRecords = [
 export default function MedicalRecords() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState("All");
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [newRecord, setNewRecord] = useState({
+    patientName: "",
+    patientId: "",
+    recordType: "Lab Results",
+    description: "",
+    doctor: "",
+    date: "",
+    notes: ""
+  });
 
   const filteredRecords = medicalRecords.filter(record => {
     const matchesSearch = record.patientName.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -94,6 +104,34 @@ export default function MedicalRecords() {
       case "Imaging Report": return <AlertCircle className="w-4 h-4" />;
       case "Surgery Report": return <Pill className="w-4 h-4" />;
       default: return <FileText className="w-4 h-4" />;
+    }
+  };
+
+  const handleAddRecord = () => {
+    if (newRecord.patientName && newRecord.patientId && newRecord.description && newRecord.doctor) {
+      const record = {
+        id: `MR${String(medicalRecords.length + 1).padStart(3, '0')}`,
+        patientName: newRecord.patientName,
+        patientId: newRecord.patientId,
+        recordType: newRecord.recordType,
+        description: newRecord.description,
+        doctor: newRecord.doctor,
+        date: newRecord.date || new Date().toISOString().split('T')[0],
+        status: "Active",
+        attachments: 0,
+        notes: newRecord.notes || ""
+      };
+      medicalRecords.push(record);
+      setNewRecord({
+        patientName: "",
+        patientId: "",
+        recordType: "Lab Results",
+        description: "",
+        doctor: "",
+        date: "",
+        notes: ""
+      });
+      setShowAddModal(false);
     }
   };
 
@@ -140,7 +178,7 @@ export default function MedicalRecords() {
             <Filter className="w-4 h-4 mr-2" />
             Filters
           </Button>
-          <Button className="rounded-xl gradient-primary text-white">
+          <Button onClick={() => setShowAddModal(true)} className="rounded-xl gradient-primary text-white">
             <Plus className="w-4 h-4 mr-2" />
             New Record
           </Button>
@@ -150,7 +188,7 @@ export default function MedicalRecords() {
       {/* Record Cards */}
       <div className="grid gap-4">
         {filteredRecords.map((record) => (
-          <Card key={record.id} className="p-6 shadow-card rounded-2xl border-2 bg-slate-100 border-slate-300 text-slate-900">
+          <Card key={record.id} className="p-6 shadow-card rounded-2xl border-2 bg-slate-100 border-slate-300 text-slate-900 hover:shadow-lg transition-all duration-300">
             <div className="flex items-start justify-between mb-4">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center">
@@ -235,6 +273,101 @@ export default function MedicalRecords() {
           <h3 className="text-lg font-semibold mb-2">No records found</h3>
           <p className="text-muted-foreground">Try adjusting your search or filter criteria</p>
         </Card>
+      )}
+
+      {/* Add Record Modal */}
+      {showAddModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <Card className="w-full max-w-md mx-4 p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-semibold">Add New Record</h2>
+              <Button variant="ghost" size="sm" onClick={() => setShowAddModal(false)}>
+                <X className="w-4 h-4" />
+              </Button>
+            </div>
+            
+            <div className="space-y-4">
+              <div>
+                <label className="text-sm font-medium">Patient Name *</label>
+                <Input
+                  value={newRecord.patientName}
+                  onChange={(e) => setNewRecord({...newRecord, patientName: e.target.value})}
+                  placeholder="Enter patient's full name"
+                />
+              </div>
+
+              <div>
+                <label className="text-sm font-medium">Patient ID *</label>
+                <Input
+                  value={newRecord.patientId}
+                  onChange={(e) => setNewRecord({...newRecord, patientId: e.target.value})}
+                  placeholder="P001"
+                />
+              </div>
+
+              <div>
+                <label className="text-sm font-medium">Record Type</label>
+                <select
+                  value={newRecord.recordType}
+                  onChange={(e) => setNewRecord({...newRecord, recordType: e.target.value})}
+                  className="w-full px-3 py-2 border border-input rounded-md"
+                >
+                  <option value="Lab Results">Lab Results</option>
+                  <option value="Medical History">Medical History</option>
+                  <option value="Imaging Report">Imaging Report</option>
+                  <option value="Surgery Report">Surgery Report</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="text-sm font-medium">Description *</label>
+                <Input
+                  value={newRecord.description}
+                  onChange={(e) => setNewRecord({...newRecord, description: e.target.value})}
+                  placeholder="Brief description of the record"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="text-sm font-medium">Doctor *</label>
+                  <Input
+                    value={newRecord.doctor}
+                    onChange={(e) => setNewRecord({...newRecord, doctor: e.target.value})}
+                    placeholder="Dr. Smith"
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium">Date</label>
+                  <Input
+                    type="date"
+                    value={newRecord.date}
+                    onChange={(e) => setNewRecord({...newRecord, date: e.target.value})}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="text-sm font-medium">Notes</label>
+                <textarea
+                  value={newRecord.notes}
+                  onChange={(e) => setNewRecord({...newRecord, notes: e.target.value})}
+                  placeholder="Additional notes or observations"
+                  className="w-full px-3 py-2 border border-input rounded-md h-20 resize-none"
+                />
+              </div>
+
+              <div className="flex gap-2 pt-4">
+                <Button onClick={handleAddRecord} className="flex-1">
+                  Add Record
+                </Button>
+                <Button variant="outline" onClick={() => setShowAddModal(false)} className="flex-1">
+                  Cancel
+                </Button>
+              </div>
+            </div>
+          </Card>
+        </div>
       )}
     </div>
   );

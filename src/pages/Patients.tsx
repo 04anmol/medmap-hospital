@@ -14,7 +14,8 @@ import {
   Heart,
   AlertCircle,
   User,
-  FileText
+  FileText,
+  X
 } from "lucide-react";
 
 const patients = [
@@ -75,6 +76,17 @@ const patients = [
 export default function Patients() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("All");
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [newPatient, setNewPatient] = useState({
+    name: "",
+    age: "",
+    gender: "",
+    phone: "",
+    email: "",
+    diagnosis: "",
+    room: "",
+    priority: "Medium"
+  });
 
   const filteredPatients = patients.filter(patient => {
     const matchesSearch = patient.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -90,6 +102,36 @@ export default function Patients() {
       case "Medium": return "bg-info text-info-foreground";
       case "Low": return "bg-success text-success-foreground";
       default: return "bg-muted text-muted-foreground";
+    }
+  };
+
+  const handleAddPatient = () => {
+    if (newPatient.name && newPatient.age && newPatient.gender && newPatient.phone) {
+      const patient = {
+        id: `P${String(patients.length + 1).padStart(3, '0')}`,
+        name: newPatient.name,
+        age: parseInt(newPatient.age),
+        gender: newPatient.gender,
+        admissionDate: new Date().toISOString().split('T')[0],
+        status: "Active",
+        room: newPatient.room || "TBD",
+        diagnosis: newPatient.diagnosis || "Under Evaluation",
+        priority: newPatient.priority,
+        phone: newPatient.phone,
+        email: newPatient.email || ""
+      };
+      patients.push(patient);
+      setNewPatient({
+        name: "",
+        age: "",
+        gender: "",
+        phone: "",
+        email: "",
+        diagnosis: "",
+        room: "",
+        priority: "Medium"
+      });
+      setShowAddModal(false);
     }
   };
 
@@ -138,7 +180,7 @@ export default function Patients() {
             <Filter className="w-4 h-4 mr-2" />
             Filters
           </Button>
-          <Button className="rounded-xl gradient-primary text-white">
+          <Button onClick={() => setShowAddModal(true)} className="rounded-xl gradient-primary text-white">
             <Plus className="w-4 h-4 mr-2" />
             Add Patient
           </Button>
@@ -148,7 +190,7 @@ export default function Patients() {
       {/* Patient Cards */}
       <div className="grid gap-4">
         {filteredPatients.map((patient) => (
-          <Card key={patient.id} className="p-6 shadow-card rounded-2xl border-2 bg-teal-100 border-teal-300 text-teal-900">
+          <Card key={patient.id} className="p-6 shadow-card rounded-2xl border-2 bg-teal-100 border-teal-300 text-teal-900 hover:shadow-lg transition-all duration-300">
             <div className="flex items-start justify-between mb-4">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center">
@@ -201,15 +243,15 @@ export default function Patients() {
             </div>
 
             <div className="flex gap-2">
-              <Button variant="outline" size="sm" className="flex-1">
+              <Button variant="outline" size="sm" className="flex-1 bg-teal-50 border-teal-300 text-teal-700 hover:bg-teal-100">
                 <FileText className="w-4 h-4 mr-2" />
                 View Records
               </Button>
-              <Button variant="outline" size="sm" className="flex-1">
+              <Button variant="outline" size="sm" className="flex-1 bg-teal-50 border-teal-300 text-teal-700 hover:bg-teal-100">
                 <AlertCircle className="w-4 h-4 mr-2" />
                 Update Status
               </Button>
-              <Button variant="outline" size="sm" className="flex-1">
+              <Button variant="outline" size="sm" className="flex-1 bg-teal-50 border-teal-300 text-teal-700 hover:bg-teal-100">
                 <Phone className="w-4 h-4 mr-2" />
                 Contact
               </Button>
@@ -224,6 +266,117 @@ export default function Patients() {
           <h3 className="text-lg font-semibold mb-2">No patients found</h3>
           <p className="text-muted-foreground">Try adjusting your search or filter criteria</p>
         </Card>
+      )}
+
+      {/* Add Patient Modal */}
+      {showAddModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <Card className="w-full max-w-md mx-4 p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-semibold">Add New Patient</h2>
+              <Button variant="ghost" size="sm" onClick={() => setShowAddModal(false)}>
+                <X className="w-4 h-4" />
+              </Button>
+            </div>
+            
+            <div className="space-y-4">
+              <div>
+                <label className="text-sm font-medium">Full Name *</label>
+                <Input
+                  value={newPatient.name}
+                  onChange={(e) => setNewPatient({...newPatient, name: e.target.value})}
+                  placeholder="Enter patient's full name"
+                />
+              </div>
+              
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="text-sm font-medium">Age *</label>
+                  <Input
+                    type="number"
+                    value={newPatient.age}
+                    onChange={(e) => setNewPatient({...newPatient, age: e.target.value})}
+                    placeholder="Age"
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium">Gender *</label>
+                  <select
+                    value={newPatient.gender}
+                    onChange={(e) => setNewPatient({...newPatient, gender: e.target.value})}
+                    className="w-full px-3 py-2 border border-input rounded-md"
+                  >
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label className="text-sm font-medium">Phone Number *</label>
+                <Input
+                  value={newPatient.phone}
+                  onChange={(e) => setNewPatient({...newPatient, phone: e.target.value})}
+                  placeholder="+1-555-0123"
+                />
+              </div>
+
+              <div>
+                <label className="text-sm font-medium">Email</label>
+                <Input
+                  type="email"
+                  value={newPatient.email}
+                  onChange={(e) => setNewPatient({...newPatient, email: e.target.value})}
+                  placeholder="patient@email.com"
+                />
+              </div>
+
+              <div>
+                <label className="text-sm font-medium">Diagnosis</label>
+                <Input
+                  value={newPatient.diagnosis}
+                  onChange={(e) => setNewPatient({...newPatient, diagnosis: e.target.value})}
+                  placeholder="Primary diagnosis"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="text-sm font-medium">Room Assignment</label>
+                  <Input
+                    value={newPatient.room}
+                    onChange={(e) => setNewPatient({...newPatient, room: e.target.value})}
+                    placeholder="ICU-101"
+                  />
+                </div>
+                <div>
+                  <label className="text-sm font-medium">Priority</label>
+                  <select
+                    value={newPatient.priority}
+                    onChange={(e) => setNewPatient({...newPatient, priority: e.target.value})}
+                    className="w-full px-3 py-2 border border-input rounded-md"
+                  >
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                    <option value="Critical">Critical</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="flex gap-2 pt-4">
+                <Button onClick={handleAddPatient} className="flex-1">
+                  Add Patient
+                </Button>
+                <Button variant="outline" onClick={() => setShowAddModal(false)} className="flex-1">
+                  Cancel
+                </Button>
+              </div>
+            </div>
+          </Card>
+        </div>
       )}
     </div>
   );

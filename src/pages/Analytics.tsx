@@ -73,7 +73,7 @@ export default function Analytics() {
 
       {/* Key Metrics */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-        <Card className="p-6 text-center bg-sky-100 border-sky-300 text-sky-900 border-2">
+        <Card className="p-6 text-center bg-sky-100 border-sky-300 text-sky-900 border-2 hover:shadow-lg transition-all duration-300">
           <div className="w-12 h-12 bg-sky-600 rounded-full flex items-center justify-center mx-auto mb-2">
             <Users className="w-6 h-6 text-white" />
           </div>
@@ -84,7 +84,7 @@ export default function Analytics() {
             <span className="text-xs text-green-600">+12%</span>
           </div>
         </Card>
-        <Card className="p-6 text-center bg-lime-100 border-lime-300 text-lime-900 border-2">
+        <Card className="p-6 text-center bg-lime-100 border-lime-300 text-lime-900 border-2 hover:shadow-lg transition-all duration-300">
           <div className="w-12 h-12 bg-lime-600 rounded-full flex items-center justify-center mx-auto mb-2">
             <Activity className="w-6 h-6 text-white" />
           </div>
@@ -95,7 +95,7 @@ export default function Analytics() {
             <span className="text-xs text-green-600">+5%</span>
           </div>
         </Card>
-        <Card className="p-6 text-center bg-orange-100 border-orange-300 text-orange-900 border-2">
+        <Card className="p-6 text-center bg-orange-100 border-orange-300 text-orange-900 border-2 hover:shadow-lg transition-all duration-300">
           <div className="w-12 h-12 bg-orange-600 rounded-full flex items-center justify-center mx-auto mb-2">
             <Clock className="w-6 h-6 text-white" />
           </div>
@@ -106,7 +106,7 @@ export default function Analytics() {
             <span className="text-xs text-green-600">-8%</span>
           </div>
         </Card>
-        <Card className="p-6 text-center bg-rose-100 border-rose-300 text-rose-900 border-2">
+        <Card className="p-6 text-center bg-rose-100 border-rose-300 text-rose-900 border-2 hover:shadow-lg transition-all duration-300">
           <div className="w-12 h-12 bg-rose-600 rounded-full flex items-center justify-center mx-auto mb-2">
             <Heart className="w-6 h-6 text-white" />
           </div>
@@ -122,7 +122,7 @@ export default function Analytics() {
       {/* Detailed Analytics */}
       <div className="grid lg:grid-cols-2 gap-6 mb-6">
         {/* Patient Flow */}
-        <Card className="p-6 shadow-card rounded-2xl border-2 bg-indigo-100 border-indigo-300 text-indigo-900">
+        <Card className="p-6 shadow-card rounded-2xl border-2 bg-indigo-100 border-indigo-300 text-indigo-900 hover:shadow-lg transition-all duration-300">
           <div className="flex items-center gap-2 mb-4">
             <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center">
               <BarChart3 className="w-4 h-4 text-white" />
@@ -146,7 +146,7 @@ export default function Analytics() {
         </Card>
 
         {/* Resource Utilization */}
-        <Card className="p-6 shadow-card rounded-2xl border-2 bg-fuchsia-100 border-fuchsia-300 text-fuchsia-900">
+        <Card className="p-6 shadow-card rounded-2xl border-2 bg-fuchsia-100 border-fuchsia-300 text-fuchsia-900 hover:shadow-lg transition-all duration-300">
           <div className="flex items-center gap-2 mb-4">
             <div className="w-8 h-8 bg-fuchsia-600 rounded-lg flex items-center justify-center">
               <PieChart className="w-4 h-4 text-white" />
@@ -188,7 +188,7 @@ export default function Analytics() {
       {/* Performance Metrics */}
       <div className="grid lg:grid-cols-2 gap-6 mb-6">
         {/* Performance Indicators */}
-        <Card className="p-6 shadow-card rounded-2xl border-2 bg-teal-100 border-teal-300 text-teal-900">
+        <Card className="p-6 shadow-card rounded-2xl border-2 bg-teal-100 border-teal-300 text-teal-900 hover:shadow-lg transition-all duration-300">
           <div className="flex items-center gap-2 mb-4">
             <div className="w-8 h-8 bg-teal-600 rounded-lg flex items-center justify-center">
               <TrendingUp className="w-4 h-4 text-white" />
@@ -212,7 +212,7 @@ export default function Analytics() {
         </Card>
 
         {/* Financial Overview */}
-        <Card className="p-6 shadow-card rounded-2xl border-2 bg-emerald-100 border-emerald-300 text-emerald-900">
+        <Card className="p-6 shadow-card rounded-2xl border-2 bg-emerald-100 border-emerald-300 text-emerald-900 hover:shadow-lg transition-all duration-300">
           <div className="flex items-center gap-2 mb-4">
             <div className="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center">
               <BarChart3 className="w-4 h-4 text-white" />

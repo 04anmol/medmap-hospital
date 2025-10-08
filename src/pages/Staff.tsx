@@ -168,7 +168,7 @@ export default function Staff() {
       {/* Staff Cards */}
       <div className="grid gap-4">
         {filteredStaff.map((member) => (
-          <Card key={member.id} className="p-6 shadow-card rounded-2xl border-2 bg-amber-100 border-amber-300 text-amber-900">
+          <Card key={member.id} className="p-6 shadow-card rounded-2xl border-2 bg-amber-100 border-amber-300 text-amber-900 hover:shadow-lg transition-all duration-300">
             <div className="flex items-start justify-between mb-4">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center">

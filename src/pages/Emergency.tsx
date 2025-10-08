@@ -182,7 +182,7 @@ export default function Emergency() {
       {/* Emergency Cases */}
       <div className="grid gap-4">
         {filteredCases.map((case_) => (
-          <Card key={case_.id} className="p-6 shadow-card rounded-2xl border-2 bg-red-100 border-red-300 text-red-900">
+          <Card key={case_.id} className="p-6 shadow-card rounded-2xl border-2 bg-red-100 border-red-300 text-red-900 hover:shadow-lg transition-all duration-300">
             <div className="flex items-start justify-between mb-4">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center">

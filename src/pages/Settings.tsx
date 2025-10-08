@@ -61,7 +61,7 @@ export default function Settings() {
 
       <div className="grid lg:grid-cols-2 gap-6">
         {/* Notification Settings */}
-        <Card className="p-6 shadow-card rounded-2xl border-2 bg-sky-100 border-sky-300 text-sky-900">
+        <Card className="p-6 shadow-card rounded-2xl border-2 bg-sky-100 border-sky-300 text-sky-900 hover:shadow-lg transition-all duration-300">
           <div className="flex items-center gap-2 mb-6">
             <div className="w-8 h-8 bg-sky-600 rounded-lg flex items-center justify-center">
               <Bell className="w-4 h-4 text-white" />
@@ -113,7 +113,7 @@ export default function Settings() {
         </Card>
 
         {/* Security Settings */}
-        <Card className="p-6 shadow-card rounded-2xl border-2 bg-red-100 border-red-300 text-red-900">
+        <Card className="p-6 shadow-card rounded-2xl border-2 bg-red-100 border-red-300 text-red-900 hover:shadow-lg transition-all duration-300">
           <div className="flex items-center gap-2 mb-6">
             <div className="w-8 h-8 bg-red-600 rounded-lg flex items-center justify-center">
               <Shield className="w-4 h-4 text-white" />
@@ -153,7 +153,7 @@ export default function Settings() {
         </Card>
 
         {/* System Settings */}
-        <Card className="p-6 shadow-card rounded-2xl border-2 bg-slate-100 border-slate-300 text-slate-900">
+        <Card className="p-6 shadow-card rounded-2xl border-2 bg-slate-100 border-slate-300 text-slate-900 hover:shadow-lg transition-all duration-300">
           <div className="flex items-center gap-2 mb-6">
             <div className="w-8 h-8 bg-slate-600 rounded-lg flex items-center justify-center">
               <Database className="w-4 h-4 text-white" />
@@ -195,7 +195,7 @@ export default function Settings() {
         </Card>
 
         {/* Hospital Information */}
-        <Card className="p-6 shadow-card rounded-2xl border-2 bg-cyan-100 border-cyan-300 text-cyan-900">
+        <Card className="p-6 shadow-card rounded-2xl border-2 bg-cyan-100 border-cyan-300 text-cyan-900 hover:shadow-lg transition-all duration-300">
           <div className="flex items-center gap-2 mb-6">
             <div className="w-8 h-8 bg-cyan-600 rounded-lg flex items-center justify-center">
               <Users className="w-4 h-4 text-white" />
