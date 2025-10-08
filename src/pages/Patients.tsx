@@ -190,16 +190,16 @@ export default function Patients() {
       {/* Patient Cards */}
       <div className="grid gap-4">
         {filteredPatients.map((patient) => (
-          <Card key={patient.id} className="p-6 shadow-card rounded-2xl border-2 bg-teal-100 border-teal-300 text-teal-900 hover:shadow-lg transition-all duration-300">
+          <Card key={patient.id} className="p-6 shadow-card rounded-2xl border-4 border-blue-600 bg-blue-100/80 text-blue-900 hover:shadow-lg transition-all duration-300">
             <div className="flex items-start justify-between mb-4">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center">
                   <User className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold">{patient.name}</h3>
-                  <p className="text-sm text-muted-foreground">ID: {patient.id}</p>
-                  <p className="text-sm text-muted-foreground">{patient.age} years, {patient.gender}</p>
+                  <h3 className="text-xl font-bold text-blue-900">{patient.name}</h3>
+                  <p className="text-base text-blue-700">ID: {patient.id}</p>
+                  <p className="text-base text-blue-700">{patient.age} years, {patient.gender}</p>
                 </div>
               </div>
               <div className="flex gap-2">
@@ -218,41 +218,41 @@ export default function Patients() {
             <div className="grid md:grid-cols-2 gap-4 mb-4">
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4 text-muted-foreground" />
-                  <span className="text-sm">Admitted: {patient.admissionDate}</span>
+                  <Calendar className="w-5 h-5 text-blue-600" />
+                  <span className="text-base text-blue-800">Admitted: {patient.admissionDate}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Heart className="w-4 h-4 text-muted-foreground" />
-                  <span className="text-sm">Room: {patient.room}</span>
+                  <Heart className="w-5 h-5 text-blue-600" />
+                  <span className="text-base text-blue-800">Room: {patient.room}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <FileText className="w-4 h-4 text-muted-foreground" />
-                  <span className="text-sm">Diagnosis: {patient.diagnosis}</span>
+                  <FileText className="w-5 h-5 text-blue-600" />
+                  <span className="text-base text-blue-800">Diagnosis: {patient.diagnosis}</span>
                 </div>
               </div>
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
-                  <Phone className="w-4 h-4 text-muted-foreground" />
-                  <span className="text-sm">{patient.phone}</span>
+                  <Phone className="w-5 h-5 text-blue-600" />
+                  <span className="text-base text-blue-800">{patient.phone}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Mail className="w-4 h-4 text-muted-foreground" />
-                  <span className="text-sm">{patient.email}</span>
+                  <Mail className="w-5 h-5 text-blue-600" />
+                  <span className="text-base text-blue-800">{patient.email}</span>
                 </div>
               </div>
             </div>
 
             <div className="flex gap-2">
-              <Button variant="outline" size="sm" className="flex-1 bg-teal-50 border-teal-300 text-teal-700 hover:bg-teal-100">
-                <FileText className="w-4 h-4 mr-2" />
+              <Button variant="outline" size="sm" className="flex-1 bg-blue-600 border-blue-600 text-white hover:bg-blue-700 text-base font-medium">
+                <FileText className="w-5 h-5 mr-2" />
                 View Records
               </Button>
-              <Button variant="outline" size="sm" className="flex-1 bg-teal-50 border-teal-300 text-teal-700 hover:bg-teal-100">
-                <AlertCircle className="w-4 h-4 mr-2" />
+              <Button variant="outline" size="sm" className="flex-1 bg-blue-600 border-blue-600 text-white hover:bg-blue-700 text-base font-medium">
+                <AlertCircle className="w-5 h-5 mr-2" />
                 Update Status
               </Button>
-              <Button variant="outline" size="sm" className="flex-1 bg-teal-50 border-teal-300 text-teal-700 hover:bg-teal-100">
-                <Phone className="w-4 h-4 mr-2" />
+              <Button variant="outline" size="sm" className="flex-1 bg-blue-600 border-blue-600 text-white hover:bg-blue-700 text-base font-medium">
+                <Phone className="w-5 h-5 mr-2" />
                 Contact
               </Button>
             </div>

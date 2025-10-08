@@ -199,16 +199,16 @@ export default function Discharges() {
       {/* Discharge Cards */}
       <div className="grid gap-4">
         {filteredDischarges.map((discharge) => (
-          <Card key={discharge.id} className="p-6 shadow-card rounded-2xl border-2 bg-emerald-100 border-emerald-300 text-emerald-900 hover:shadow-lg transition-all duration-300">
+          <Card key={discharge.id} className="p-6 shadow-card rounded-2xl border-4 border-emerald-600 bg-emerald-100/80 text-emerald-900 hover:shadow-lg transition-all duration-300">
             <div className="flex items-start justify-between mb-4">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center">
                   <User className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold">{discharge.patientName}</h3>
-                  <p className="text-sm text-muted-foreground">ID: {discharge.id}</p>
-                  <p className="text-sm text-muted-foreground">{discharge.age} years, {discharge.gender}</p>
+                  <h3 className="text-xl font-bold text-emerald-900">{discharge.patientName}</h3>
+                  <p className="text-base text-emerald-700">ID: {discharge.id}</p>
+                  <p className="text-base text-emerald-700">{discharge.age} years, {discharge.gender}</p>
                 </div>
               </div>
               <div className="flex gap-2">
@@ -250,14 +250,14 @@ export default function Discharges() {
               </div>
             </div>
 
-            <div className="mb-4 p-3 bg-muted/30 rounded-xl">
-              <p className="text-sm font-medium mb-1">Treatment:</p>
-              <p className="text-sm text-muted-foreground">{discharge.treatment}</p>
+            <div className="mb-4 p-3 bg-emerald-200/50 rounded-xl">
+              <p className="text-base font-medium mb-1 text-emerald-900">Treatment:</p>
+              <p className="text-base text-emerald-800">{discharge.treatment}</p>
             </div>
 
-            <div className="mb-4 p-3 bg-muted/30 rounded-xl">
-              <p className="text-sm font-medium mb-1">Discharge Notes:</p>
-              <p className="text-sm text-muted-foreground">{discharge.dischargeNotes}</p>
+            <div className="mb-4 p-3 bg-emerald-200/50 rounded-xl">
+              <p className="text-base font-medium mb-1 text-emerald-900">Discharge Notes:</p>
+              <p className="text-base text-emerald-800">{discharge.dischargeNotes}</p>
             </div>
 
             <div className="flex gap-2">
@@ -275,30 +275,30 @@ export default function Discharges() {
               )}
               {discharge.status === "Processing" && (
                 <>
-                  <Button className="flex-1 bg-info hover:bg-info/90 text-white">
-                    <Clock className="w-4 h-4 mr-2" />
+                  <Button className="flex-1 bg-blue-600 hover:bg-blue-700 text-white text-base font-medium">
+                    <Clock className="w-5 h-5 mr-2" />
                     Complete Process
                   </Button>
-                  <Button variant="outline" className="flex-1">
-                    <FileText className="w-4 h-4 mr-2" />
+                  <Button variant="outline" className="flex-1 bg-emerald-600 border-emerald-600 text-white hover:bg-emerald-700 text-base font-medium">
+                    <FileText className="w-5 h-5 mr-2" />
                     View Progress
                   </Button>
                 </>
               )}
               {discharge.status === "Completed" && (
                 <>
-                  <Button variant="outline" className="flex-1">
-                    <FileText className="w-4 h-4 mr-2" />
+                  <Button variant="outline" className="flex-1 bg-emerald-600 border-emerald-600 text-white hover:bg-emerald-700 text-base font-medium">
+                    <FileText className="w-5 h-5 mr-2" />
                     View Documents
                   </Button>
-                  <Button variant="outline" className="flex-1">
-                    <User className="w-4 h-4 mr-2" />
+                  <Button variant="outline" className="flex-1 bg-emerald-600 border-emerald-600 text-white hover:bg-emerald-700 text-base font-medium">
+                    <User className="w-5 h-5 mr-2" />
                     Patient Profile
                   </Button>
                 </>
               )}
-              <Button variant="outline" className="flex-1">
-                <Phone className="w-4 h-4 mr-2" />
+              <Button variant="outline" className="flex-1 bg-emerald-600 border-emerald-600 text-white hover:bg-emerald-700 text-base font-medium">
+                <Phone className="w-5 h-5 mr-2" />
                 Contact
               </Button>
             </div>

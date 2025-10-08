@@ -51,6 +51,56 @@ const mockRequests: EmergencyRequest[] = [
     slaMinutes: 112,
     resources: ["ICU Bed"],
   },
+  {
+    id: "REQ-004",
+    priority: "critical",
+    patient: { name: "Robert Wilson", age: 67, bloodType: "AB-" },
+    location: "1.8 miles away",
+    distance: "1.8",
+    requestTime: "1 min ago",
+    slaMinutes: 119,
+    resources: ["ICU Bed", "Ventilator", "Blood Transfusion"],
+  },
+  {
+    id: "REQ-005",
+    priority: "high",
+    patient: { name: "Lisa Martinez", age: 34, bloodType: "O+" },
+    location: "4.1 miles away",
+    distance: "4.1",
+    requestTime: "6 mins ago",
+    slaMinutes: 114,
+    resources: ["Oxygen Support", "ICU Bed"],
+  },
+  {
+    id: "REQ-006",
+    priority: "medium",
+    patient: { name: "David Thompson", age: 52, bloodType: "B-" },
+    location: "6.7 miles away",
+    distance: "6.7",
+    requestTime: "10 mins ago",
+    slaMinutes: 110,
+    resources: ["ICU Bed"],
+  },
+  {
+    id: "REQ-007",
+    priority: "critical",
+    patient: { name: "Anna Rodriguez", age: 29, bloodType: "A-" },
+    location: "2.9 miles away",
+    distance: "2.9",
+    requestTime: "3 mins ago",
+    slaMinutes: 117,
+    resources: ["Blood Transfusion", "ICU Bed"],
+  },
+  {
+    id: "REQ-008",
+    priority: "high",
+    patient: { name: "James Brown", age: 71, bloodType: "O-" },
+    location: "3.5 miles away",
+    distance: "3.5",
+    requestTime: "7 mins ago",
+    slaMinutes: 113,
+    resources: ["Ventilator", "Oxygen Support"],
+  },
 ];
 
 export default function LiveRequests() {
@@ -92,18 +142,39 @@ export default function LiveRequests() {
       </div>
 
       {/* Stats Bar */}
-      <div className="grid grid-cols-3 gap-4 mb-6">
-        <Card className="p-4 shadow-card rounded-2xl border text-center">
-          <div className="text-2xl font-bold text-emergency">{requests.length}</div>
-          <div className="text-sm text-muted-foreground">Pending</div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <Card className="p-6 shadow-card rounded-2xl border-4 border-red-600 bg-red-100/80 text-red-900 hover:shadow-lg transition-all duration-300">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-full bg-red-600 flex items-center justify-center">
+              <AlertCircle className="w-6 h-6 text-white" />
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-red-900">{requests.length}</div>
+              <div className="text-base text-red-700">Pending Requests</div>
+            </div>
+          </div>
         </Card>
-        <Card className="p-4 shadow-card rounded-2xl border text-center">
-          <div className="text-2xl font-bold text-success">18</div>
-          <div className="text-sm text-muted-foreground">Accepted Today</div>
+        <Card className="p-6 shadow-card rounded-2xl border-4 border-green-600 bg-green-100/80 text-green-900 hover:shadow-lg transition-all duration-300">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-full bg-green-600 flex items-center justify-center">
+              <Clock className="w-6 h-6 text-white" />
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-green-900">18</div>
+              <div className="text-base text-green-700">Accepted Today</div>
+            </div>
+          </div>
         </Card>
-        <Card className="p-4 shadow-card rounded-2xl border text-center">
-          <div className="text-2xl font-bold text-info">4.2</div>
-          <div className="text-sm text-muted-foreground">Avg Response (min)</div>
+        <Card className="p-6 shadow-card rounded-2xl border-4 border-blue-600 bg-blue-100/80 text-blue-900 hover:shadow-lg transition-all duration-300">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center">
+              <User className="w-6 h-6 text-white" />
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-blue-900">4.2</div>
+              <div className="text-base text-blue-700">Avg Response (min)</div>
+            </div>
+          </div>
         </Card>
       </div>
 
@@ -116,78 +187,91 @@ export default function LiveRequests() {
             <p className="text-sm text-muted-foreground mt-2">New emergency requests will appear here</p>
           </Card>
         ) : (
-          requests.map((request) => (
-            <Card key={request.id} className="p-6 shadow-card rounded-2xl border hover:shadow-elevated transition-shadow">
-              {/* Header Row */}
-              <div className="flex items-start justify-between mb-4">
-                <div className="flex items-center gap-3">
-                  <span className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-bold uppercase border ${getPriorityColor(request.priority)}`}>
-                    {request.priority}
-                  </span>
-                  <span className="text-sm text-muted-foreground">{request.id}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Clock className={`w-4 h-4 ${getSLAColor(request.slaMinutes)}`} />
-                  <span className={`text-sm font-medium ${getSLAColor(request.slaMinutes)}`}>
-                    {Math.floor(request.slaMinutes / 60)}:{(request.slaMinutes % 60).toString().padStart(2, "0")}
-                  </span>
-                </div>
-              </div>
-
-              {/* Patient Info */}
-              <div className="grid md:grid-cols-2 gap-4 mb-4">
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2">
-                    <User className="w-4 h-4 text-muted-foreground" />
-                    <span className="font-medium">{request.patient.name}</span>
-                    <span className="text-sm text-muted-foreground">• {request.patient.age}y</span>
+          <div className="grid gap-4">
+            {requests.map((request) => (
+              <Card key={request.id} className="p-6 shadow-card rounded-2xl border-4 border-orange-600 bg-orange-100/80 text-orange-900 hover:shadow-lg transition-all duration-300">
+                {/* Header Row */}
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-full bg-orange-600 flex items-center justify-center">
+                      <AlertCircle className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-orange-900">{request.patient.name}</h3>
+                      <p className="text-base text-orange-700">ID: {request.id}</p>
+                      <p className="text-base text-orange-700">{request.patient.age} years, Blood Type: {request.patient.bloodType}</p>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <Droplet className="w-4 h-4 text-emergency" />
-                    <span className="text-sm">Blood Type: <span className="font-semibold">{request.patient.bloodType}</span></span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <MapPin className="w-4 h-4 text-info" />
-                    <span className="text-sm">{request.location}</span>
-                  </div>
-                </div>
-
-                <div>
-                  <p className="text-sm font-medium mb-2">Requested Resources:</p>
-                  <div className="flex flex-wrap gap-2">
-                    {request.resources.map((resource, idx) => (
-                      <span key={idx} className="pill-filter-active text-xs">
-                        {resource === "ICU Bed" && <Wind className="w-3 h-3 inline mr-1" />}
-                        {resource === "Blood Transfusion" && <Droplet className="w-3 h-3 inline mr-1" />}
-                        {resource === "Oxygen Support" && <Wind className="w-3 h-3 inline mr-1" />}
-                        {resource}
+                  <div className="flex gap-2">
+                    <span className={`inline-flex items-center rounded-full px-3 py-1 text-sm font-bold uppercase border ${getPriorityColor(request.priority)}`}>
+                      {request.priority}
+                    </span>
+                    <div className="flex items-center gap-2">
+                      <Clock className={`w-5 h-5 ${getSLAColor(request.slaMinutes)}`} />
+                      <span className={`text-base font-medium ${getSLAColor(request.slaMinutes)}`}>
+                        {Math.floor(request.slaMinutes / 60)}:{(request.slaMinutes % 60).toString().padStart(2, "0")}
                       </span>
-                    ))}
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Actions */}
-              <div className="flex items-center gap-3 pt-4 border-t">
-                <Button
-                  onClick={() => handleAccept(request.id)}
-                  className="flex-1 h-12 gradient-success text-white font-semibold rounded-xl hover:opacity-90"
-                >
-                  Accept & Assign
-                </Button>
-                <Button
-                  variant="outline"
-                  onClick={() => handleDecline(request.id)}
-                  className="h-12 px-6 rounded-xl"
-                >
-                  Decline
-                </Button>
-                <Button variant="outline" size="icon" className="h-12 w-12 rounded-xl">
-                  <Phone className="w-5 h-5" />
-                </Button>
-              </div>
-            </Card>
-          ))
+                {/* Patient Info */}
+                <div className="grid md:grid-cols-2 gap-4 mb-4">
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2">
+                      <MapPin className="w-5 h-5 text-orange-600" />
+                      <span className="text-base text-orange-800">{request.location}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Clock className="w-5 h-5 text-orange-600" />
+                      <span className="text-base text-orange-800">Requested: {request.requestTime}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Droplet className="w-5 h-5 text-orange-600" />
+                      <span className="text-base text-orange-800">Blood Type: {request.patient.bloodType}</span>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <p className="text-base font-medium text-orange-900">Requested Resources:</p>
+                    <div className="flex flex-wrap gap-2">
+                      {request.resources.map((resource, idx) => (
+                        <span key={idx} className="bg-orange-200/50 text-orange-800 px-3 py-1 rounded-full text-sm font-medium">
+                          {resource === "ICU Bed" && <Wind className="w-4 h-4 inline mr-1" />}
+                          {resource === "Blood Transfusion" && <Droplet className="w-4 h-4 inline mr-1" />}
+                          {resource === "Oxygen Support" && <Wind className="w-4 h-4 inline mr-1" />}
+                          {resource === "Ventilator" && <Wind className="w-4 h-4 inline mr-1" />}
+                          {resource}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Actions */}
+                <div className="flex gap-2">
+                  <Button
+                    onClick={() => handleAccept(request.id)}
+                    className="flex-1 bg-green-600 border-green-600 text-white hover:bg-green-700 text-base font-medium"
+                  >
+                    <Clock className="w-5 h-5 mr-2" />
+                    Accept & Assign
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => handleDecline(request.id)}
+                    className="flex-1 bg-red-600 border-red-600 text-white hover:bg-red-700 text-base font-medium"
+                  >
+                    <AlertCircle className="w-5 h-5 mr-2" />
+                    Decline
+                  </Button>
+                  <Button variant="outline" className="bg-orange-600 border-orange-600 text-white hover:bg-orange-700 text-base font-medium">
+                    <Phone className="w-5 h-5 mr-2" />
+                    Call
+                  </Button>
+                </div>
+              </Card>
+            ))}
+          </div>
         )}
       </div>
     </div>

@@ -201,16 +201,16 @@ export default function Admissions() {
       {/* Admission Cards */}
       <div className="grid gap-4">
         {filteredAdmissions.map((admission) => (
-          <Card key={admission.id} className="p-6 shadow-card rounded-2xl border-2 bg-cyan-100 border-cyan-300 text-cyan-900 hover:shadow-lg transition-all duration-300">
+          <Card key={admission.id} className="p-6 shadow-card rounded-2xl border-4 border-red-600 bg-red-100/80 text-red-900 hover:shadow-lg transition-all duration-300">
             <div className="flex items-start justify-between mb-4">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center">
                   <User className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold">{admission.patientName}</h3>
-                  <p className="text-sm text-muted-foreground">ID: {admission.id}</p>
-                  <p className="text-sm text-muted-foreground">{admission.age} years, {admission.gender}</p>
+                  <h3 className="text-xl font-bold text-red-900">{admission.patientName}</h3>
+                  <p className="text-base text-red-700">ID: {admission.id}</p>
+                  <p className="text-base text-red-700">{admission.age} years, {admission.gender}</p>
                 </div>
               </div>
               <div className="flex gap-2">
@@ -227,16 +227,16 @@ export default function Admissions() {
             <div className="grid md:grid-cols-2 gap-4 mb-4">
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4 text-muted-foreground" />
-                  <span className="text-sm">Admission Time: {admission.admissionTime}</span>
+                  <Calendar className="w-5 h-5 text-red-600" />
+                  <span className="text-base text-red-800">Admission Time: {admission.admissionTime}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <FileText className="w-4 h-4 text-muted-foreground" />
-                  <span className="text-sm">Diagnosis: {admission.diagnosis}</span>
+                  <FileText className="w-5 h-5 text-red-600" />
+                  <span className="text-base text-red-800">Diagnosis: {admission.diagnosis}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <User className="w-4 h-4 text-muted-foreground" />
-                  <span className="text-sm">Doctor: {admission.assignedDoctor}</span>
+                  <User className="w-5 h-5 text-red-600" />
+                  <span className="text-base text-red-800">Doctor: {admission.assignedDoctor}</span>
                 </div>
               </div>
               <div className="space-y-2">
@@ -251,23 +251,23 @@ export default function Admissions() {
               </div>
             </div>
 
-            <div className="mb-4 p-3 bg-muted/30 rounded-xl">
-              <p className="text-sm font-medium mb-1">Notes:</p>
-              <p className="text-sm text-muted-foreground">{admission.notes}</p>
+            <div className="mb-4 p-3 bg-red-200/50 rounded-xl">
+              <p className="text-base font-medium mb-1 text-red-900">Notes:</p>
+              <p className="text-base text-red-800">{admission.notes}</p>
             </div>
 
             {admission.status === "Pending" && (
               <div className="flex gap-2">
-                <Button className="flex-1 bg-success hover:bg-success/90 text-white">
-                  <CheckCircle className="w-4 h-4 mr-2" />
+                <Button className="flex-1 bg-green-600 hover:bg-green-700 text-white text-base font-medium">
+                  <CheckCircle className="w-5 h-5 mr-2" />
                   Approve
                 </Button>
-                <Button variant="outline" className="flex-1 border-emergency text-emergency hover:bg-emergency hover:text-emergency-foreground">
-                  <XCircle className="w-4 h-4 mr-2" />
+                <Button variant="outline" className="flex-1 bg-red-600 border-red-600 text-white hover:bg-red-700 text-base font-medium">
+                  <XCircle className="w-5 h-5 mr-2" />
                   Reject
                 </Button>
-                <Button variant="outline" className="flex-1">
-                  <FileText className="w-4 h-4 mr-2" />
+                <Button variant="outline" className="flex-1 bg-red-600 border-red-600 text-white hover:bg-red-700 text-base font-medium">
+                  <FileText className="w-5 h-5 mr-2" />
                   View Details
                 </Button>
               </div>
@@ -275,16 +275,16 @@ export default function Admissions() {
 
             {admission.status !== "Pending" && (
               <div className="flex gap-2">
-                <Button variant="outline" className="flex-1">
-                  <FileText className="w-4 h-4 mr-2" />
+                <Button variant="outline" className="flex-1 bg-red-600 border-red-600 text-white hover:bg-red-700 text-base font-medium">
+                  <FileText className="w-5 h-5 mr-2" />
                   View Details
                 </Button>
-                <Button variant="outline" className="flex-1">
-                  <User className="w-4 h-4 mr-2" />
+                <Button variant="outline" className="flex-1 bg-red-600 border-red-600 text-white hover:bg-red-700 text-base font-medium">
+                  <User className="w-5 h-5 mr-2" />
                   Patient Profile
                 </Button>
-                <Button variant="outline" className="flex-1">
-                  <Phone className="w-4 h-4 mr-2" />
+                <Button variant="outline" className="flex-1 bg-red-600 border-red-600 text-white hover:bg-red-700 text-base font-medium">
+                  <Phone className="w-5 h-5 mr-2" />
                   Contact
                 </Button>
               </div>

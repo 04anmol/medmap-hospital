@@ -21,6 +21,7 @@ import Staff from "./pages/Staff";
 import Analytics from "./pages/Analytics";
 import Settings from "./pages/Settings";
 import Database from "./pages/Database";
+import Surgery from "./pages/Surgery";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -54,6 +55,7 @@ const App = () => (
           
           {/* Medical Services */}
           <Route path="/emergency" element={<DashboardLayout><Emergency /></DashboardLayout>} />
+          <Route path="/surgery" element={<DashboardLayout><Surgery /></DashboardLayout>} />
           
           {/* Operations & Analytics */}
           <Route path="/staff" element={<DashboardLayout><Staff /></DashboardLayout>} />

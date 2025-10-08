@@ -188,7 +188,7 @@ export default function MedicalRecords() {
       {/* Record Cards */}
       <div className="grid gap-4">
         {filteredRecords.map((record) => (
-          <Card key={record.id} className="p-6 shadow-card rounded-2xl border-2 bg-slate-100 border-slate-300 text-slate-900 hover:shadow-lg transition-all duration-300">
+          <Card key={record.id} className="p-6 shadow-card rounded-2xl border-4 border-purple-600 bg-purple-100/80 text-purple-900 hover:shadow-lg transition-all duration-300">
             <div className="flex items-start justify-between mb-4">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center">
@@ -197,9 +197,9 @@ export default function MedicalRecords() {
                   </div>
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold">{record.patientName}</h3>
-                  <p className="text-sm text-muted-foreground">Record ID: {record.id}</p>
-                  <p className="text-sm text-muted-foreground">Patient ID: {record.patientId}</p>
+                  <h3 className="text-xl font-bold text-purple-900">{record.patientName}</h3>
+                  <p className="text-base text-purple-700">Record ID: {record.id}</p>
+                  <p className="text-base text-purple-700">Patient ID: {record.patientId}</p>
                 </div>
               </div>
               <div className="flex gap-2">
@@ -240,26 +240,26 @@ export default function MedicalRecords() {
               </div>
             </div>
 
-            <div className="mb-4 p-3 bg-muted/30 rounded-xl">
-              <p className="text-sm font-medium mb-1">Description:</p>
-              <p className="text-sm text-muted-foreground">{record.description}</p>
+            <div className="mb-4 p-3 bg-purple-200/50 rounded-xl">
+              <p className="text-base font-medium mb-1 text-purple-900">Description:</p>
+              <p className="text-base text-purple-800">{record.description}</p>
             </div>
 
             <div className="flex gap-2">
-              <Button variant="outline" className="flex-1">
-                <Eye className="w-4 h-4 mr-2" />
+              <Button variant="outline" className="flex-1 bg-purple-600 border-purple-600 text-white hover:bg-purple-700 text-base font-medium">
+                <Eye className="w-5 h-5 mr-2" />
                 View Record
               </Button>
-              <Button variant="outline" className="flex-1">
-                <Download className="w-4 h-4 mr-2" />
+              <Button variant="outline" className="flex-1 bg-purple-600 border-purple-600 text-white hover:bg-purple-700 text-base font-medium">
+                <Download className="w-5 h-5 mr-2" />
                 Download
               </Button>
-              <Button variant="outline" className="flex-1">
-                <Edit className="w-4 h-4 mr-2" />
+              <Button variant="outline" className="flex-1 bg-purple-600 border-purple-600 text-white hover:bg-purple-700 text-base font-medium">
+                <Edit className="w-5 h-5 mr-2" />
                 Edit
               </Button>
-              <Button variant="outline" className="flex-1 border-emergency text-emergency hover:bg-emergency hover:text-emergency-foreground">
-                <Trash2 className="w-4 h-4 mr-2" />
+              <Button variant="outline" className="flex-1 bg-red-600 border-red-600 text-white hover:bg-red-700 text-base font-medium">
+                <Trash2 className="w-5 h-5 mr-2" />
                 Delete
               </Button>
             </div>
